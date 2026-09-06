@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FCFBF8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="90 dienų">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAQAElEQVR4nOydB0AURxfHJ4rYkCagqBARlCIqURGwAJYgJmIDewELCkiCWKLmM/YuYsUCgmCPCNgSFTAUGx2liIogHSNVCETE8r29OS4IDEWKu+f8JJe5veUO2P++efPezBuR8rJ/EIVSEyKIQiFAxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSFCxUEhQsVBIULFQSHyVYujpKTk0aPYzMzMly+zs1/+DQ8lpf9+8w2SkpSSluncWVpaRrpzZxnpLl3k1NTUxMTE0FfGVyeOf/75JzAwODQ8NCoyOj7+cf2/sVu3burqaupqapr9+urp6kpISCBh55uvZNeE9+/fBwYGeXv7+Pnffvv2LWocoqKiRkZjpk+bNnz4sG/A1Agpwi+ON2/euJ10d3V1y8vLr/KSirKKjp5Ob2VlxW8Vu8jJde8mLyklBcdLS0tLSuALOpl//y0pyczODg0LDwsJTXz+vMo7yHeTNzM1nTtntpycLBI6hFwc585f2L//wKtXOYIj4uLi44zHjhgxQldXR0amM2oIhQUF90NC7t17cOXKVeieBMfbt2+/cuXyhQvmI+FCaMWRlJxkZ7ciLi4OP23Xrv2ECT9OMDGBjgA1BTdv3fL09Lp9+y/BEQ0N9Z07t/fv1w8JC8IpDle3k1u2bBM8nTbNbNXKlbKyMqipKSoqcnf3OHLU+c2bf/GRufNmr/nll44dOyLuI2ziyMjItF++Mjw8HD8dOlR306YNvVV6o+YkNzdvr+O+8+cv4KfKvZRdXZ179vwWcRyhEsfDh4/MLRa8fv0aP924Yb2FxTzUUkBHtnnztqCgYGh36tTp0MH9hoYGiMu0Xv/br0goCL5zZ575fBhiQFtZWdnz4vlRo0aiFkRaSnrypIkdOrS/d/9BWVnZlavXYMSrrT0YcRYhsRw3b95aavszBDOgPWzYUDdXl7Zt26IvxP37D6ysbIqKi6E938J8w4bfEDdphbiPn7+/tY0tVsbEiRNOeZz8gspAjKOj9+ef13v3VoH2SXePw4edEDfhvOUAP2PqtBnl5eXQtl1qA/EGxA4gEDLFdOqzZ4nQdtizy8zMFHENbosjNTXVxGQSNuC2tktXrrBHbCInJ3fipMlZWdkQYj/idGjcOGPEKTjcrcCffuasOVgZkyZNZJsyAIisnD93RlJS8uPHj7Y/2YHLjDgFhy2Hqdm0yMgoaOjp6Z457dG6dWvESuLj482mzoAsDUTG7gQHSEtLI47AVctx5vQZrAwNDQ3XE86sVQbQt2/fzZs2It70kc2btyLuwEnLAWHQ742M8b0YGOAvK8uBjOiMGbNDQkOhAR0NmDrEBThpOeyW2YMyEG8UwAllAHv27MQD7F9Wr8VjK/bDPXFcvXYddyiQTuOQ/6+goLDcfhk00tPTjx07jrgA97oVfYORaWnpMBAIDgpo37494hTjx0+Mi4+HHzss9D7kXxC74ZjlcDvpDsqAxrJldpxTBmBvbweP0Cd6XvJCrIdLlqO4uHj4CENIuiop9fT3u8XmEQqJDx8+6OgOy8nJUVRUDAq8zfL5p1yyHEePHsfp+LVrV3NRGUCrVq3mzZ0NjbS0tICAQMRuOCMOSIJDEgsaAwd+Z/T994izTJ8+DRsMd49TiN1wRhzXr/+Bh6821laIy8jJyRmPHQuN4OA7qalpiMVwRhwXPRkPrnNn6TFjRiOOM3PmdNzw9fVFLIYb4oCQaCgvvDhlyhTEfYYNG4qHWn8FBCAWww1xCObuzpwxHXEf8Kb1R4yARmhoeGlpKWIrHBAHDP8uel6ChpbWgF69lJBQYGCoj3i/WlBwMGIrHBBHTEwsBAagMXasERIWRlZMTA8MCEJshQPiiIiIwA1dHR0kLMjLy6up9oFGeEQkYiscEEd4OPPn69Chw4AB/ZEQMUhbGx6Tk5Mbv+q/meCAOELDwuBRW3swhBeREKGhpoobjx8nIFbC9j833FiFhYXQ0NUVnj4Fo6GujhuPE1gqDrZX9omIiMINYXI4MKoCy8FWcbDdcjx9+hQ3+vXTRMIFeFFKPXtCIyHhCWIlbLccWVnZiBc1FxFh3Y/6/v17uOljHsW0at16QP/+amqqDfWK1NXVX6SkpKexNMPCdnFkZGbCY/fuPRr0XSkpqcFBd+Iexz2OT0hKTlZWVu6roa7Zt6++gf633yqiRhMbF7d1646oqKjKs0Hbtm0LjtH69f9T7qVcz/fpocD8XpULD7EK9lsORhw9unev5/kfP350czu5a7dD5fFhHI/fkSdcv7VrVjemLgO87f79B487u+CluZUpKysLCgo2Nn5g97OtldWS+pg6KSlJ3ACnW1JSErEMVovj3bt3uMqbfDf5+pyfnf1yxcqV9++H4KfQo6uqqip+q5iakgq+S0pqKly/jZs2+9++7bjX4TNKvMHPY2o2PTY2FvHqSFlbWQ4YMEBTUxOOJyQkREZGObucAPU47N0XFHz39wtn6+xlBILIy8+j4mgY6enpuNGjR92W482bN7NmzYEuHDHriDQOHzqgpPRJIiYpOeknW7vHCU/u3r03ffrMGzeut2vXDjUEsBlYGYMGDzp0YF+3bt0EL3Xt2mXkSENT08l2y1bExMSEh4cfO+5c59QTSUl+MdP8vPz6d0YtBqtHK/kVxSHl5bvWefL2nTuxMubMnX3Zx6uKMhCvGpOPj9fsOcwsPThzx45dqCHExMY6HTkKDfBdPH8/X1kZAuBDvb0uqigzxRf27TuQ+Dyx9veU5lW2BPILChD7YLU4yt7y3T1R0TrqbTx4EHrK4wzixcq2bt7Upk2bGk8Dn2Pblk1DhzILzjxOnRZkberDCRdXcGjgHZycDtXSX4CrcfDgPkjKg6/q5upe+3tKSPLFkZuTi9gHq8VRXs53KtvU5dwdO84sExITEzuwfx+qC8e9e/FcmyNHa1hcFB390NnZpXKZUUxU9EN4NDIaU+d4R0NDHRe0jI6Orv3MtqJ8Eb9l5Ro4VosDHD3cEBFpU/uZeA2cicn4Ll3kUF2Af2Bi8iNiLt6j6q9a2yzdvmPXcecTlQ8WFORnZGQgZk6JVpXzo6OiXVxOBAd/Ul4Bn/b0WaKgBGWNvC3n/4Kiber4Bb8IrBbHW4HlaFPbQgTwNPGNrqU1oPqraWnpz5OqlqWGUQbiXXKIiFR5SVaWkVdg4CfTLELD+LUrtfp/khk+fNhpsunUbdt3zjOfv2bNf6X3tHgJZOiGoiIfIjIC09i2bcNc45aB3ZajnB9LqN1yREfxDQC+5AJgVGlhsVDfYOSYMcbjTSbl5+cJXvquwgBEP6x68YYMYTLpEBep3LPAZa7pkz9ZXnDR8xKuZYh461P4v8L7d4hMeYVT9WWLmJHghuUQaVObz/HhwwfcqLKA7NYtv8AgvgGAi33mzDnBS60q1kS9K6968XR0GHGAGiIqTcPpq9EXN+LjiUky+BbBDxAXH48bNRozAQLLIdqWdisNpF07/v1U9u+bWk7T6FuR+378yf4p8RVXCPMsMbH6SxARqfJu2oMH4UZoaJjgoKKiAkS9mI9I+OQjjIz+m7k4ZvRoyKXx3z+OOQ2cG3FxcUSm/C1fmm1FqeVoIHIVtTdyK/UI1VHt0wffslVmzYB/Wvnp95XWycXHMeKAYadaRd5cgJSUtGofphx2SFhY5eNaWowbcfXa9coezLr/rf1t3a92dj+vWrVi9+7t+CCYDQjCIl7VIVQrhUWFuCEmxsZa6ayOkHbuzN/yIrfW1BRENdRU+yQ8eerl5W21xFLwXWAV4OL5+TMbG0DG/8cfxuHj4Hz4XL4KDTXVmvOoAwcOhIFGbEwsxCoEIZOfli4NCQktLS1dsMDS2+sS3o4DTMXChQsqf292VvaCBYvA3YFQx9K6IqSZGZm4IS9fr/xAC8NqyyEjw9/nIDcvr/YzF1kuQsxVz19mv+KT44sWQo4DvkAlgkzYT3b2ME6Bhs3Smi9ef95YAwbSTypmkwDDhg9ds+YXxBv+jDEyvnHzZvVv9Pa5bPzDeJxl3bxpw6CKHopEBi+tCDKqMd76xWG15YAOG25cuH1z6hKH6ZTJQYFBYPPv3Lm7bv2GDb+tqzFICom3zVu23bt7H9pmZqY/jBtX47sNqBivxsTE9tP8b5KR1ZLFWdlZEIotLCiwtrbV09PRGqClqdm3/N076NEiINgSGSU4c/bsWaguMjOyEM9ssLMWA9tT9rKysllZWXk5eXWeuW3blvDISLDqZ06fjYqIPHLEqcqmFoLEG2KKMPWAO5v0VuCIQE4OMnlxcfFVXtq8caPRmO+X2S/Pzc2DmD18VTkBEsiODg6gG1QPsvizVeo7IaGFYfs0wZ5KzAVOSXlR55mdOnW67O1lYMCsJAMFGI4cPXLkGEtLqx07d8GjoeHo0aPHYmXAOZc8LwpGFtUBR6RPH2ZRyZMnNUzgg9D4bX9fHGOtwrRpZrf9btVTGUDyixRUv5zzF4HtlgMCDPfvPXjy9Fll35AExM493N3Onb+wbdsOiEdB6pXJ0/r/d0LHjh3Xrfu1PgtuVZR7QeY9MfF5ja9KSEgcOnjAYc/uv/9+BY4OdArgBcvJyYqKiqJ6AxYRujnEiKNh89xaDNaLgxeHgPgSdOr1XNQ0a+aMKZMnRkREQcwbYhUQ/tLU1NTRGaIzRHvw4IE4XFEnvZR7IV5xe+g+SPsEQlgT4h/whT6LiAoHRU2tD2Il7BcHP8AF17j+K95AAWD8G7PXn4oKf+pNUtLzhm4iWU8iIvkTBvR0WVqzlu0+h3IvZTxfq7pv2KwIxpaZvOnvzUEkb0kO/IIsnCCIYbs4wDdU12CMR2zLikOqYhqOYMe4pgW8DRzPHTKEvft8cWD1KXY7IG9SzNs9o2WQluaLo7CwWcQRHh6BM73avCQwO+GAOIbyyshD6tXX1w+1FIKNYXGVuiZHsFvxEG0qjkYwauRIPN0BUvCopRBYqU7NkBIDoV+5eg0xDkcv1gY5ECfEAQ7p6FGjoBEUHAxRS9QiCMQhId703mJAQCBER1ClsoLshBsVL4zHMYU7mSVlLVVBKzmZH5PtJNH05eu9vX0Qb2rS5MmTEIvhhjjGjB6FG74t1bOEVMz0Ua+ootFUQOj2jz9vQMPQwEAwu4CdcEMckAfBGVQvb5/8/LqTcI0EkvX45oaIOK7c1YR4nDqNG1OmTEbshjOFlMzN5+DG2bPnUTNzycsbEh/QWPTpRJ7GU1paevToMcTMIOxqbMz24oicEYeOjo6KCrPMEO48wXqWJqGoqGjFilWCyTuREZFbtzIT/rp27WJu/vnr8WvkFSp5jgAABcpJREFUxAnX4mJmUvty+2VtWLlWpTJcKsG2ZLElPEIm7Nr1P1DT4XTkKPRW1ta26zdu3LRpy+y55nhRworly5t2xUBRUbHLCVfES8OamXGgTjeXxDF1qinelNXNzR01HYYGhrhxyuPMSXcPGC1DzH7tmtXwcahJcakwG6t/WcWJyogcK96I597FxsbWOIXz89DT09nrsFvgeEJ+38f70pIllqhJSUpKwvv+9VJSqnGiEAvh2AaA4B8YGI4uKCiQlZEJCPAXExNDTceLFy9ERNooKDT91BsIif7wo8mTJ8x0Za9LFwcNGoi4AMcsh7i4+Lp1zJLUnNxcR8f9qElRUlJqDmUATk5HsDIWzLfgijIQR3eknjFzdkhIKHTbf/5xrfqqJLaRkPBkvMnE9+/fKyoq+vneYOey2BrhZMHo3bt2iIiIgK22sbGFIQBiMZBDWWS5GJQBwXKnwwc5pAzEUXHALWhjY42Y2dsvrKxtBAup2QYMfObOs8jMZOJpVksWc67OLie7FcSsTy+fM8cc18yHjnz9+nWoEUDgshB4XfRPcVGHjh0lJSQlJMQbuWM0SHbBQktc50NPT/f0KXcW1tmtHa6KA/Gy6iYTJuHqKw4Ou81M6w4r5eXlRURGJj5LTEx8np6Z+brgdSH897qoxpAr+DQSEpKSkLOXkpTvKq/SGyK0yt9padXTaV279n/nL/yOeMupL3leqGWZDGvhsDgQszFghsmEyTCyhQvpuHfPpEkTazzt48ePhw873bhx83FTVBlX6tlz1OhRq1bak1Y5wMeBMi78fhHxesArl72kKqoGcgtuiwPxlrOaTZ2O6xUvt7f7+eefqp8D0XHInlQ+AvexqpqqjHRnSSkwDlKSvI6E+b+4ZHFJcUFB4evXr0FzjGEpKMwvKHj27FmVmcbwQct5G9NXoayszNrG9q+/mG0fZWQ6X7ns0707GxdJ1weO9YLV6d+/36lTJy0tl0Bk2nHfgfSMzF07t1cJTuvqDOnSRU5DXaP/APjXT1W1z2csT331Kufp06cxsbFxsfFh4WEjhg+tfg6MTeaZz8erKBQUFM6e8eCuMpAQWA7M02eJ5uYWL1/+De0RI4bvc9zbTCuRauH69T/Xb9iI5/9pa2u7OB9l7YKUeiIk4gBycnJmzZ6LV7fCVflt3a+mpi2U+Xz16tXqNb8GBATipybjf3R0dGB/Rr5OhEcciLe0dfnyVb5+/KmEYEKgi2nuuihnz57btn0n3jsYovtr164Wjp2RkZCJAwPmfcPGjXi7hXbt2k2dZmq1eHGT18CAMMbVa9cPHjycnJyMjxgY6Dvs2S0rK4OEBSEUB1BYULBh42a8NgQzcYKJtY11U00IBVkc2H8oKTkJP4VeDKJwU9g9lfwzEE5xYGJiYg4dOuLn/1+Bjj69VUbo6+uPGK6jo13PWgwCIILq7/+Xr69f8J27gqLV0I9YWJgvXGAhISGBhA5hFgcGwqHHjh739rlc5fjQobp6urpKSr2UlHoqKyvVqBWwQA9CQyPCIx+EhFSpYwnB9SWLF4EymnZOCasQfnFgUlPTjju7nDtHnLkOgRAFBcXWrVuDVYCQSXFxETxWX2AHGhpnbDTuB2OjSlVNhZWvRRyYkpKSh9GPoh89jIqMinr4qLDeW+BAfzRYW1tff7jx2LHoq+HrEkcVcnJy01JTU9LS0tPTU1NSX/79EpL/oqJtOonBv45iHcWkpaX69es3cOB3jczQcpSvWhyU2uF8boXSfFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCIUHFQiFBxUIhQcVCI/B8AAP//gl4qngAAAAZJREFUAwAR/mHFdnVplwAAAABJRU5ErkJggg==">
+<style>[hidden]{display:none!important}</style>
+<title>Devyniasdešimt Kaukių</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Caveat:wght@400;600&family=Patrick+Hand&display=swap">
+<style>
+:root{
+  --paper:#FCFBF8; --ink:#1B1A18; --ink-2:#6C685F; --ink-3:#A6A099; --hair:#E6E2D9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131211; --ink:#EFEAE0; --ink-2:#A49C8F; --ink-3:#736C61; --hair:#2B2825;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131211; --ink:#EFEAE0; --ink-2:#A49C8F; --ink-3:#736C61; --hair:#2B2825;
+}
+*{box-sizing:border-box}
+[data-act]{touch-action:manipulation; -webkit-tap-highlight-color:rgba(0,0,0,.08); cursor:pointer; user-select:none; -webkit-user-select:none}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Patrick Hand","Comic Sans MS",ui-rounded,sans-serif;
+  font-size:18px; line-height:1.5; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:480px; margin:0 auto; padding:30px 26px calc(112px + env(safe-area-inset-bottom,0px))}
+.stamp{font-size:15px; color:var(--ink-2); margin:0}
+.display{font-family:"Caveat Brush","Caveat",cursive; font-size:46px; line-height:1.02; margin:14px 0 0}
+.sub{font-family:"Caveat",cursive; font-size:26px; line-height:1.25; color:var(--ink-2); margin:8px 0 0}
+.tiny{font-size:14.5px; color:var(--ink-3)}
+.cap{font-size:14.5px; color:var(--ink-3); margin:0 0 14px}
+.hr{height:1px; background:var(--hair); border:0; margin:30px 0}
+.warn{border-left:2px solid var(--ink); padding:8px 0 8px 14px; margin:16px 0 0; font-size:15.5px; color:var(--ink-2)}
+
+.stage{display:grid; justify-items:center; gap:14px; margin:34px 0 6px}
+.face{width:190px; height:auto; display:block}
+.tally{font-family:"Caveat Brush","Caveat",cursive; font-size:30px; line-height:1; margin:0}
+.tally small{font-family:"Patrick Hand",cursive; font-size:15px; color:var(--ink-3); margin-left:6px}
+
+.btn{border:1.5px solid var(--ink); background:transparent; color:var(--ink);
+  font-family:"Patrick Hand",cursive; font-size:17px; line-height:1; padding:13px 24px; cursor:pointer}
+.btn.small{padding:10px 16px; font-size:16px}
+.btn[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.btn:focus-visible{outline:2px solid var(--ink); outline-offset:3px}
+.link{background:none; border:0; padding:0; font:inherit; font-size:15px; color:var(--ink-3);
+  text-decoration:underline; text-underline-offset:4px; cursor:pointer}
+.row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+.ritual{display:flex; align-items:flex-start; gap:15px; width:100%; text-align:left;
+  background:none; border:0; border-bottom:1px solid var(--hair); padding:16px 2px; color:inherit; font:inherit; cursor:pointer}
+.rituals .ritual:first-child{border-top:1px solid var(--hair)}
+.ritual .txt b{display:block; font-weight:400; font-size:19px; line-height:1.25}
+.ritual .txt em{display:block; font-style:normal; font-size:15px; line-height:1.35; color:var(--ink-3); margin-top:3px}
+.ritual[aria-pressed="true"] .txt b{text-decoration:line-through; color:var(--ink-2)}
+.ritual .tick{opacity:0}
+.ritual[aria-pressed="true"] .tick{opacity:1}
+.ritual:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+
+.block{padding:22px 0; border-bottom:1px solid var(--hair)}
+.block .top{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px}
+.block .top b{font-weight:400; font-size:19px}
+.block .top span{font-size:15px; color:var(--ink-3)}
+.glasses{display:flex; gap:10px; flex-wrap:wrap}
+.glass{background:none; border:0; padding:0; cursor:pointer; line-height:0}
+.glass svg{opacity:.7}
+.glass[aria-pressed="true"] svg{opacity:1}
+.glass .pour{opacity:0}
+.glass[aria-pressed="true"] .pour{opacity:1}
+.glass:focus-visible{outline:2px solid var(--ink); outline-offset:3px}
+.readout{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px}
+.readout .n{font-family:"Caveat Brush","Caveat",cursive; font-size:28px; line-height:1}
+.readout .n i{font-style:normal; font-family:"Patrick Hand",cursive; font-size:15px; color:var(--ink-3); margin-left:6px}
+
+input[type="text"].kg{font-family:"Caveat Brush","Caveat",cursive; font-size:28px; line-height:1;
+  width:3.6em; background:transparent; color:var(--ink); border:0; border-bottom:1.5px solid var(--hair); padding:0 0 4px}
+input[type="text"].kg::placeholder{color:var(--ink-3)}
+input[type="date"]{font:inherit; font-size:16px; background:transparent; border:0;
+  border-bottom:1px solid var(--hair); color:var(--ink); padding:6px 2px}
+textarea{width:100%; min-height:96px; resize:vertical; display:block; margin-top:6px; background:transparent;
+  border:0; border-bottom:1px solid var(--hair); color:var(--ink);
+  font-family:"Caveat",cursive; font-size:23px; line-height:1.4; padding:4px 2px 14px}
+textarea::placeholder{color:var(--ink-3)}
+textarea.code{font-family:ui-monospace,Menlo,monospace; font-size:12px; min-height:72px; line-height:1.4}
+
+.head2{display:flex; align-items:baseline; justify-content:space-between; gap:14px; margin:12px 0 6px}
+.head2 b{font-family:"Caveat Brush","Caveat",cursive; font-weight:400; font-size:30px}
+.head2 span{font-size:14.5px; color:var(--ink-3)}
+.quote{font-family:"Caveat",cursive; font-size:23px; line-height:1.35; color:var(--ink-2); margin:10px 0 0}
+.grid90{display:grid; grid-template-columns:repeat(10,1fr); gap:7px}
+.cell{aspect-ratio:1; border:1.5px solid var(--ink); background:transparent; padding:0; cursor:pointer}
+.cell[data-level="1"]{background:color-mix(in srgb,var(--ink) 14%, transparent)}
+.cell[data-level="2"]{background:color-mix(in srgb,var(--ink) 32%, transparent)}
+.cell[data-level="3"]{background:color-mix(in srgb,var(--ink) 52%, transparent)}
+.cell[data-level="4"]{background:color-mix(in srgb,var(--ink) 74%, transparent)}
+.cell[data-level="5"]{background:var(--ink)}
+.cell[data-today="1"]{outline:2px solid var(--ink); outline-offset:2px}
+.cell[disabled]{border-color:var(--hair); cursor:default}
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:26px}
+.stat b{display:block; font-family:"Caveat Brush","Caveat",cursive; font-weight:400; font-size:32px; line-height:1.05}
+.stat span{font-size:14px; color:var(--ink-3)}
+.settings{display:grid; gap:18px; font-size:16px; color:var(--ink-2)}
+.settings label{display:flex; justify-content:space-between; align-items:center; gap:14px}
+
+.chart{width:100%; height:auto; display:block; overflow:visible}
+.chart .axis{stroke:var(--hair); stroke-width:1}
+.chart .base{stroke:var(--ink-3); stroke-width:1; stroke-dasharray:3 5}
+.chart .curve{fill:none; stroke:var(--ink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.chart .dot{fill:var(--ink)}
+.chart .last{fill:var(--ink); stroke:var(--paper); stroke-width:2}
+.chart text{font-family:"Patrick Hand",cursive; font-size:13px; fill:var(--ink-3)}
+.chart text.value{font-family:"Caveat Brush","Caveat",cursive; font-size:19px; fill:var(--ink)}
+
+.meal{border-bottom:1px solid var(--hair); padding:15px 2px; display:grid;
+  grid-template-columns:90px 1fr; gap:14px; align-items:baseline}
+.meal dt{font-size:14.5px; color:var(--ink-3)}
+.meal dd{margin:0; font-size:18px; line-height:1.4}
+dl{margin:0}
+.rule{display:grid; grid-template-columns:28px 1fr; gap:12px; align-items:start;
+  font-size:17.5px; line-height:1.4; margin-bottom:14px}
+.entry{border-bottom:1px solid var(--hair); padding:16px 2px}
+.entry .when{font-size:14.5px; color:var(--ink-3)}
+.entry .what{font-family:"Caveat",cursive; font-size:23px; line-height:1.35; margin-top:4px}
+
+nav{position:fixed; left:0; right:0; bottom:0; z-index:10; background:var(--paper);
+  border-top:1px solid var(--hair); padding-bottom:env(safe-area-inset-bottom,0px)}
+nav .bar{max-width:480px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr)}
+nav button{background:none; border:0; padding:12px 4px 14px; color:var(--ink-3); font:inherit;
+  font-size:14.5px; cursor:pointer; display:grid; justify-items:center; gap:4px}
+nav button svg{display:block; opacity:.75}
+nav button[aria-current="page"]{color:var(--ink)}
+nav button[aria-current="page"] svg{opacity:1}
+footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
+  font-size:14.5px; line-height:1.5; color:var(--ink-3)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <main>
+    <section id="v-siandien">
+      <p class="stamp" id="stamp"></p>
+      <p class="warn" id="ispejimas" hidden></p>
+      <p class="tiny" id="diag" style="margin:10px 0 0"></p>
+      <h1 class="display" id="greet"></h1>
+      <p class="sub" id="dayLine"></p>
+
+      <div class="stage">
+        <svg class="face" viewBox="0 0 200 216" role="img" aria-label="Šios dienos veidas"
+             fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M100 15 C124 14 146 26 155 49 C164 72 162 102 151 123 C140 144 121 156 99 155 C76 154 57 140 48 118 C39 95 40 65 52 44 C63 25 79 16 100 15 Z"/>
+          <path id="browL" d="M65 73 C74 66 87 66 95 72"/>
+          <path id="browR" d="M112 71 C121 65 134 66 142 73"/>
+          <circle cx="79" cy="96" r="14"/><circle cx="125" cy="94" r="13"/>
+          <circle cx="80" cy="98" r="3.6" fill="var(--ink)" stroke="none"/>
+          <circle cx="126" cy="96" r="3.6" fill="var(--ink)" stroke="none"/>
+          <path d="M99 88 C105 108 108 120 100 126 C97 128 94 127 93 125"/>
+          <path id="mouth" d="M83 142 C92 137 109 137 117 142"/>
+          <path d="M100 156 C101 174 100 190 99 205" stroke-width="2.2"/>
+        </svg>
+        <p class="tally"><span id="dayCount">—</span><small id="tallyNote">diena iš 90</small></p>
+        <button class="link" data-act="siandien" id="backToday" hidden>grįžti į šiandien</button>
+      </div>
+
+      <hr class="hr">
+      <p class="quote" id="preNote" hidden>Rytoj — pirma diena. Šiandien nieko žymėti nereikia.</p>
+
+      <div id="daily">
+        <p class="cap">šios dienos ritualai</p>
+        <div class="rituals" id="rituals"></div>
+
+        <div class="block">
+          <div class="top"><b>vanduo</b><span>2 l · aštuonios stiklinės</span></div>
+          <div class="glasses" id="glasses"></div>
+          <div class="readout">
+            <span class="n"><span id="waterVal">0</span><i>litro</i></span>
+            <span class="tiny" id="waterHint"></span>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="top"><b>ėjimas</b><span>tikslas <span id="walkGoal">30</span> min</span></div>
+          <div class="readout">
+            <span class="n"><span id="walkVal">0</span><i>min</i></span>
+            <span class="row" style="margin:0">
+              <button class="btn small" data-act="ejimas" data-delta="-5" aria-label="Atimti 5 minutes">− 5</button>
+              <button class="btn small" data-act="ejimas" data-delta="5" aria-label="Pridėti 5 minutes">+ 5</button>
+            </span>
+          </div>
+          <p class="tiny" id="walkHint" style="margin:14px 0 0"></p>
+        </div>
+
+        <div class="block">
+          <div class="top"><b>svoris</b><span>rytais, prieš pusryčius</span></div>
+          <div class="readout">
+            <span class="n"><input class="kg" id="weightInput" type="text" inputmode="decimal" maxlength="5" placeholder="—" aria-label="Svoris kilogramais"><i>kg</i></span>
+            <span class="tiny" id="weightHint"></span>
+          </div>
+        </div>
+
+        <p class="cap" style="margin-top:26px">kaip buvo</p>
+        <div class="row" id="moodRow" style="margin-top:0">
+          <button class="btn small" data-act="nuotaika" data-m="1">lengva</button>
+          <button class="btn small" data-act="nuotaika" data-m="2">vidutiniškai</button>
+          <button class="btn small" data-act="nuotaika" data-m="3">sunku</button>
+        </div>
+
+        <p class="cap" style="margin-top:30px">šios dienos eilutė</p>
+        <textarea id="noteBox" placeholder="viena eilutė apie šią dieną…" aria-label="Dienos užrašas"></textarea>
+      </div>
+    </section>
+
+    <section id="v-kelias" hidden>
+      <p class="stamp">devyniasdešimt dienų</p>
+      <div class="head2"><b id="weekTitle"></b><span id="weekRange"></span></div>
+      <p class="quote" id="weekFocus"></p>
+
+      <hr class="hr">
+      <p class="cap">kiekvienas langelis — viena diena</p>
+      <div class="grid90" id="grid"></div>
+      <p class="tiny" style="margin-top:16px">Kuo tamsesnis, tuo daugiau tos dienos dalykų atlikta. Praleistą dieną gali užpildyti atgal — bakstelėk ją.</p>
+
+      <div class="stats">
+        <div class="stat"><b id="statFull">0</b><span>pilnos dienos</span></div>
+        <div class="stat"><b id="statStreak">0</b><span>iš eilės</span></div>
+        <div class="stat"><b id="statWalk">0</b><span>ėjimo val.</span></div>
+      </div>
+
+      <hr class="hr">
+      <p class="cap">svorio kreivė</p>
+      <div id="chartWrap"></div>
+      <p class="tiny" id="chartSummary" style="margin-top:12px"></p>
+
+      <hr class="hr">
+      <div class="settings">
+        <div>
+          <div style="margin-bottom:10px">ėjimo tikslas</div>
+          <div class="row" id="goalRow" style="margin-top:0">
+            <button class="btn small" data-act="tikslas" data-min="20">20 min</button>
+            <button class="btn small" data-act="tikslas" data-min="30">30 min</button>
+            <button class="btn small" data-act="tikslas" data-min="45">45 min</button>
+            <button class="btn small" data-act="tikslas" data-min="60">60 min</button>
+          </div>
+        </div>
+        <label>pradžios diena <input type="date" id="startDate"></label>
+        <p class="tiny" id="saugojimas" style="margin:0"></p>
+        <div>
+          <div style="margin-bottom:8px">atsarginė kopija</div>
+          <textarea class="code" id="backupBox" rows="3" aria-label="Atsarginė kopija"></textarea>
+          <p class="tiny" style="margin:8px 0 0">Nusikopijuok šį tekstą į užrašus. Jei įrašai kada dingtų — įklijuok atgal ir spausk „atkurti“.</p>
+          <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
+        </div>
+        <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
+        <p class="tiny" id="versija" style="margin:0">versija 8 · tavo adresu</p>
+      </div>
+    </section>
+
+    <section id="v-valgiai" hidden>
+      <p class="stamp">stalas be mėsos</p>
+      <div class="head2"><b>Šios dienos valgiai</b><span id="menuNo"></span></div>
+      <dl id="menuList" style="margin-top:14px"></dl>
+      <div class="row">
+        <button class="btn small" data-act="meniu" data-delta="-1">← ankstesnis</button>
+        <button class="btn small" data-act="meniu" data-delta="1">kitas →</button>
+      </div>
+
+      <hr class="hr">
+      <p class="cap">kas tinka</p>
+      <div class="rule"><span>taip</span><span>grikiai, avižos, soros, bolivinė balanda, miežinės kruopos, rudieji ryžiai</span></div>
+      <div class="rule"><span>taip</span><span>ruginė raugo duona be cukraus — perskaityk sudėtį, cukrus dažnai antras</span></div>
+      <div class="rule"><span>taip</span><span>lęšiai, avinžirniai, pupelės, žirniai — baltymų pamatas be mėsos</span></div>
+      <div class="rule"><span>taip</span><span>kiaušiniai, varškė, sūris, jogurtas, kefyras — be pridėto cukraus</span></div>
+      <div class="rule"><span>taip</span><span>švieži vaisiai ir uogos; riešutai, sėklos — sauja, ne dubuo</span></div>
+      <div class="rule"><span>taip</span><span>žuvis, jei ją valgai — meniu sudarytas be mėsos ir be žuvies, tinka abiem</span></div>
+
+      <p class="cap" style="margin-top:30px">ko vengti</p>
+      <div class="rule"><span>ne</span><span>mėsa ir jos gaminiai: dešra, kumpis, faršas, sultinio kubeliai su mėsa</span></div>
+      <div class="rule"><span>ne</span><span>cukrus, medus, agavų ir klevų sirupas, datulių sirupas, saldikliai</span></div>
+      <div class="rule"><span>ne</span><span>balti kvietiniai miltai: bandelės, batonas, makaronai, sausainiai, pica</span></div>
+      <div class="rule"><span>ne</span><span>saldinti gėrimai, sultys, jogurtai su vaisių priedu, granola su sirupu</span></div>
+
+      <p class="cap" style="margin-top:30px">kai traukia saldumo</p>
+      <div class="rule"><span>1</span><span>stiklinė vandens ir dešimt minučių lauke — potraukis trunka trumpiau nei tavo ėjimas</span></div>
+      <div class="rule"><span>2</span><span>riebalai ir baltymai: sauja riešutų, kietas sūris, virtas kiaušinis</span></div>
+      <div class="rule"><span>3</span><span>šiltas prieskonis vietoj cukraus: cinamonas, kardamonas, vanilė</span></div>
+      <div class="rule"><span>4</span><span>keptas obuolys ar kriaušė su cinamonu — desertas, kuris telpa į taisykles</span></div>
+    </section>
+
+    <section id="v-uzrasai" hidden>
+      <p class="stamp">užrašų knygelė</p>
+      <div class="head2"><b>Dienų eilutės</b><span id="notesCount"></span></div>
+      <div id="notesList" style="margin-top:14px"></div>
+    </section>
+  </main>
+
+  <footer>Įrašai saugomi šiame telefone. Atsarginę kopiją rasi skiltyje „Kelias“.</footer>
+</div>
+
+<nav aria-label="Skyriai">
+  <div class="bar">
+    <button data-act="rodyti" data-view="siandien" aria-current="page">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M13 7.4 C16.1 7.3 18.7 9.9 18.6 13 C18.5 16.1 16 18.6 13 18.6 C9.9 18.6 7.4 16.1 7.4 13 C7.4 9.9 9.9 7.5 13 7.4 Z"/>
+        <path d="M13 2.4 L13 4.6"/><path d="M13 21.4 L13 23.6"/><path d="M2.4 13 L4.6 13"/><path d="M21.4 13 L23.6 13"/>
+        <path d="M5.6 5.6 L7.2 7.2"/><path d="M18.8 18.8 L20.4 20.4"/><path d="M5.6 20.4 L7.2 18.8"/><path d="M18.8 7.2 L20.4 5.6"/>
+      </svg>Šiandien</button>
+    <button data-act="rodyti" data-view="kelias">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 4.5 C10 4 17 4 21.8 4.6 C22.3 10 22.3 17 21.7 21.6 C16 22.2 9 22.2 4.3 21.6 C3.7 16 3.7 10 4 4.5 Z"/>
+        <path d="M10.4 4.4 C10.2 10 10.2 16 10.4 21.9"/><path d="M16 4.4 C15.8 10 15.8 16 16 21.9"/>
+        <path d="M4.1 10.4 C10 10.2 16 10.2 21.9 10.4"/><path d="M4.1 16 C10 15.8 16 15.8 21.9 16"/>
+      </svg>Kelias</button>
+    <button data-act="rodyti" data-view="valgiai">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M3.5 11.5 C9 10.9 17 10.9 22.5 11.5 C22.2 17 18.4 21.2 13 21.4 C7.6 21.2 3.9 17 3.5 11.5 Z"/>
+        <path d="M8 8 C8.6 6.4 8.4 5.2 7.6 4"/><path d="M13 8 C13.6 6.2 13.4 5 12.6 3.7"/><path d="M18 8 C18.6 6.4 18.4 5.2 17.6 4"/>
+      </svg>Valgiai</button>
+    <button data-act="rodyti" data-view="uzrasai">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 3.4 C11 2.9 17 2.9 20.6 3.5 C21.1 9 21.1 17 20.5 22.5 C16 23.1 10 23.1 5.9 22.4 C5.4 17 5.4 9 6 3.4 Z"/>
+        <path d="M9.6 9 C13 8.7 16 8.7 17.6 9"/><path d="M9.6 13.4 C13 13.1 16 13.1 17.6 13.4"/><path d="M9.6 17.8 C12 17.6 14 17.6 15.4 17.8"/>
+      </svg>Užrašai</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+"use strict";
+
+/* ---- savidiagnostika: viskas, kas nutinka paleidžiant, matoma ekrane ---- */
+var diagEil = [];
+function diag(t){
+  diagEil.push(t);
+  var d = document.getElementById("diag");
+  if (d) d.textContent = diagEil.join(" · ");
+}
+window.onerror = function(msg, src, line, col){
+  diag("KLAIDA: " + msg + " (eil. " + line + ":" + col + ")");
+  return false;
+};
+window.addEventListener("unhandledrejection", function(ev){
+  var r = ev && ev.reason;
+  diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
+});
+diag("paleista v8");
+
+/* ============ duomenys ============ */
+var KEY = "devynios90.v1";
+var PRADZIA = "2026-09-03";
+var STIKLINES = 8, DALYS = 5;
+
+var MEN = ["sausio","vasario","kovo","balandžio","gegužės","birželio","liepos",
+           "rugpjūčio","rugsėjo","spalio","lapkričio","gruodžio"];
+var SAV = ["Sekmadienis","Pirmadienis","Antradienis","Trečiadienis","Ketvirtadienis","Penktadienis","Šeštadienis"];
+var EILE = ["Pirma","Antra","Trečia","Ketvirta","Penkta","Šešta","Septinta","Aštunta",
+            "Devinta","Dešimta","Vienuolikta","Dvylikta","Trylikta"];
+var TEMOS = [
+  "Tik pastebėk, kur cukrus slepiasi: duonoje, padaže, jogurte, sultyse.",
+  "Pusryčiai be saldumo. Grikiai arba avižos — ir diena laikosi iki pietų.",
+  "Kūnas prašo saldaus vakare. Atsakyk ėjimu, ne spinta.",
+  "Pirmasis mėnuo baigiasi. Perskaityk savo užrašus nuo pradžios.",
+  "Ankštiniai kasdien — lęšiai, avinžirniai, pupelės. Sotumas be mėsos.",
+  "Trisdešimt minučių jau savaime suprantama. Rask maršrutą, kurio nereikia planuoti.",
+  "Svečiuose ir kavinėje: pasirink iš anksto, ne prie stalo.",
+  "Vidurys kelio. Čia dažniausiai nulūžtama — todėl čia ir lengviausia laimėti.",
+  "Duona: tik ruginė raugo. Išmok atpažinti tikrą pagal sudėtį.",
+  "Įvardyk tris dalykus, kurie pasikeitė kūne. Užrašyk.",
+  "Ėjimas be telefono. Bent trisdešimt minučių tylos.",
+  "Susikurk penkis patiekalus, kuriuos gamini negalvodama.",
+  "Paskutinė savaitė. Nuspręsk, kas lieka su tavimi po devyniasdešimtos."
+];
+var EILUTES = [
+  "Pirmas žingsnis — trumpiausias ir sunkiausias.",
+  "Kaukė šiandien dar sunki. Nešk ją.",
+  "Saldu buvo vakar. Šiandien — ramu.",
+  "Kojos žino kelią geriau nei galva.",
+  "Duona be cukraus kvepia javu, ne konditerija.",
+  "Nieko nedraudžiu. Tik pasirenku kitaip.",
+  "Kūnas tyli, kai jam netrukdai.",
+  "Vieną dieną už kitos — taip statomos sienos.",
+  "Alkis ir potraukis — du skirtingi svečiai.",
+  "Eik, kol mintys nusėda kaip dumblas.",
+  "Lęšiai verda dvidešimt minučių. Įprotis — devyniasdešimt dienų.",
+  "Šiandien niekas nežiūri. Todėl ir svarbu.",
+  "Grikis, morka, kiaušinis. Nieko heroiško.",
+  "Nuovargis meluoja, kad reikia saldumo.",
+  "Lietus nepanaikina ėjimo, tik pakeičia batus.",
+  "Vidurdienį atsigręžk — jau pusė dienos laimėta.",
+  "Kaukė lengvėja, kai nustoji jos gėdytis.",
+  "Ne valia. Įprotis.",
+  "Tuščias langelis nėra pralaimėjimas, tik tuščias langelis.",
+  "Vakaras — ne teismas. Tik miegas.",
+  "Skonis grįžta į obuolį po dviejų savaičių.",
+  "Eik lėtai, bet neapsisuk.",
+  "Kas antra diena — jau ne atsitiktinumas.",
+  "Sriuba šildo ilgiau nei saldainis.",
+  "Kūnas atleidžia greičiau, nei tikiesi.",
+  "Sunkumas ateina bangomis. Bangos praeina.",
+  "Šiandienos tavęs rytojaus tu prisimins.",
+  "Dar trisdešimt. Tada dar trisdešimt.",
+  "Devyniasdešimt dienų — ne bausmė, o pasimatymas su savimi.",
+  "Paskutinė diena bus tokia pat paprasta kaip ši."
+];
+var MENIU = [
+  {p:"Grikių košė su graikiniais riešutais ir mėlynėmis", pi:"Lęšių sriuba su morkomis ir čiobreliais, ruginės duonos riekė", v:"Keptas moliūgas su avinžirniais ir tahini padažu", u:"Sauja migdolų"},
+  {p:"Avižinė košė ant augalinio pieno su cinamonu ir tarkuotu obuoliu", pi:"Burokėlių sriuba su grietine ir virtu kiaušiniu", v:"Grikiai su keptais grybais ir svogūnais", u:"Morkų lazdelės su humusu"},
+  {p:"Omletas su špinatais ir feta", pi:"Avinžirnių kotletai, raugintų kopūstų salotos", v:"Daržovių troškinys su baltosiomis pupelėmis", u:"Kriaušė"},
+  {p:"Varškė su sėmenimis ir avietėmis", pi:"Bolivinės balandos salotos su agurku, mėtomis ir alyvuogių aliejumi", v:"Cukinijų blynai iš grikių miltų, jogurto ir krapų padažas", u:"Sauja graikinių riešutų"},
+  {p:"Ruginės duonos skrebutis su avokadu ir virtu kiaušiniu", pi:"Kreminė moliūgų sriuba su moliūgų sėklomis", v:"Lęšių troškinys su pomidorais ir čiobreliais", u:"Obuolys su nesaldintu riešutų sviestu"},
+  {p:"Sorų košė su karšta kriauše ir cinamonu", pi:"Kopūstų ir bulvių troškinys su kmynais", v:"Salotos su keptu sūriu ir burokėliais", u:"Saulėgrąžų sauja"},
+  {p:"Nesaldintas jogurtas su spanguolėmis ir sėklomis", pi:"Grybų sriuba su miežinėmis kruopomis", v:"Pomidorai, įdaryti grikiais ir sūriu", u:"Virtas kiaušinis"},
+  {p:"Grikinių miltų blynai su varške", pi:"Raudonųjų pupelių troškinys su paprika", v:"Keptos daržovės su tahini padažu", u:"Slyvos"},
+  {p:"Nakties avižos su chia sėklomis ir uogomis", pi:"Šaltibarščiai su karštomis virtomis bulvėmis", v:"Špinatų ir avinžirnių karis su rudaisiais ryžiais", u:"Riešutų mišinys"},
+  {p:"Kiaušinienė su pomidorais ir baziliku", pi:"Daržovių sriuba su lęšiais", v:"Keptas batatas su varške ir krapais", u:"Sauja vynuogių"},
+  {p:"Varškės apkepas su avižinėmis sėlenomis (be cukraus)", pi:"Grikių salotos su rūkytu sūriu ir agurkais", v:"Raugintų kopūstų sriuba su bulvėmis", u:"Migdolai ir džiovintos spanguolės be cukraus"},
+  {p:"Sorų košė su moliūgų sėklomis", pi:"Avinžirnių ir moliūgų karis", v:"Ruginė duona su varške, ridikėliais ir svogūnų laiškais", u:"Stiklinė kefyro"},
+  {p:"Omletas su grybais ir petražolėmis", pi:"Žirnių sriuba su čiobreliais ir morkomis", v:"Keptos cukinijos su lęšiais ir fetos gabalėliais", u:"Obuolys ir riešutai"},
+  {p:"Grikių košė su kefyru", pi:"Daržovių plovas su rudaisiais ryžiais", v:"Salotos su virtais kiaušiniais, burokėliais ir garstyčių padažu", u:"Sauja lazdyno riešutų"}
+];
+var RITUALAI = [
+  {k:"sugar", t:"be pridėtinio cukraus", e:"vaisiai — taip; cukrus, medus, sirupai, saldikliai — ne"},
+  {k:"flour", t:"be baltų kvietinių miltų", e:"ruginė raugo duona, grikiai, avižos, soros — taip"},
+  {k:"veg",   t:"diena be mėsos", e:"ankštiniai, kiaušiniai, pieno produktai, žuvis — jei ją valgai"}
+];
+var BURNOS = [
+  "M83 145 C92 138 109 138 117 145",
+  "M83 144 C92 139 109 139 117 144",
+  "M83 143 C92 140 109 140 117 143",
+  "M83 142 C92 141 109 141 117 142",
+  "M83 141 C92 144 109 144 117 141",
+  "M82 139 C92 148 109 148 118 138"
+];
+var ANTAKIAI = [
+  ["M65 75 C74 69 87 69 95 74", "M112 73 C121 68 134 68 142 75"],
+  ["M65 73 C74 66 87 66 95 72", "M112 71 C121 65 134 66 142 73"],
+  ["M65 70 C74 63 87 63 95 70", "M112 68 C121 62 134 63 142 71"]
+];
+
+/* ============ datos ============ */
+function iso(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function fromIso(s){ var a=String(s).split("-"); return new Date(+a[0], +a[1]-1, +a[2]); }
+function addDays(s,n){ var d=fromIso(s); d.setDate(d.getDate()+n); return iso(d); }
+function diffDays(a,b){ return Math.round((fromIso(b)-fromIso(a))/86400000); }
+function ltData(d){ var x=fromIso(d); return MEN[x.getMonth()]+" "+x.getDate(); }
+function antspaudas(d){
+  var x=fromIso(d);
+  return SAV[x.getDay()]+" · "+x.getFullYear()+" "+String(x.getMonth()+1).padStart(2,"0")+" "+String(x.getDate()).padStart(2,"0");
+}
+var TODAY = iso(new Date());
+
+/* ============ būsena ============ */
+var atmintisVeikia = true;
+function skaityti(){
+  try { return JSON.parse(localStorage.getItem(KEY)) || null; }
+  catch(e){ atmintisVeikia = false; return null; }
+}
+function irasyti(){
+  try { localStorage.setItem(KEY, JSON.stringify(state)); atmintisVeikia = true; }
+  catch(e){ atmintisVeikia = false; }
+}
+function tuscia(e){
+  return !e || (!e.sugar && !e.flour && !e.veg && !(e.walk>0) && !(e.water>0) &&
+                !String(e.note||"").trim() && !e.mood && typeof e.weight !== "number");
+}
+
+var state = skaityti() || {};
+if (!state.start) state.start = PRADZIA;
+if (!state.days || typeof state.days !== "object") state.days = {};
+if (typeof state.menuOffset !== "number") state.menuOffset = 0;
+if (typeof state.walkGoal !== "number") state.walkGoal = 30;
+if (!state.pradziaSutvarkyta){
+  if (state.start > PRADZIA) state.start = PRADZIA;
+  state.pradziaSutvarkyta = true;
+}
+irasyti();
+
+diag("būsena ✓");
+var pasirinkta = TODAY;
+var dbDoc = null, dbBusena = "tikrinam", stumimas = null;
+
+function diena(d){
+  var e = state.days[d];
+  if (!e){ e = state.days[d] = { sugar:false, flour:false, veg:false, walk:0, water:0, mood:0, note:"", weight:null }; }
+  if (typeof e.water !== "number") e.water = 0;
+  if (typeof e.walk !== "number") e.walk = 0;
+  if (typeof e.weight === "undefined") e.weight = null;
+  return e;
+}
+function saugoti(){
+  state.updated = Date.now();
+  irasyti();
+  if (dbDoc){ clearTimeout(stumimas); stumimas = setTimeout(stumti, 500); }
+}
+function dienosNr(d){ return diffDays(state.start, d) + 1; }
+function savaitesNr(n){ return Math.min(12, Math.max(0, Math.ceil(n/7)-1)); }
+function lygis(d){
+  var e = state.days[d]; if (!e) return 0;
+  return (e.sugar?1:0)+(e.flour?1:0)+(e.veg?1:0)+((e.walk||0)>=state.walkGoal?1:0)+((e.water||0)>=STIKLINES?1:0);
+}
+function kg(v){ return (Math.round(v*10)/10).toFixed(1).replace(".", ","); }
+function saugus(s){ return String(s).replace(/[<>&]/g, function(c){ return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c]; }); }
+
+/* ============ elementai ============ */
+function el(id){ return document.getElementById(id); }
+function tekstas(id, t){ var x = el(id); if (x) x.textContent = t; }
+
+/* ============ piešimas ============ */
+var VIEWS = ["siandien","kelias","valgiai","uzrasai"];
+var rodomas = "siandien";
+
+function rodyti(v){
+  rodomas = v;
+  VIEWS.forEach(function(n){ var s = el("v-"+n); if (s) s.hidden = (n !== v); });
+  var mygtukai = document.querySelectorAll("nav button");
+  for (var i = 0; i < mygtukai.length; i++){
+    if (mygtukai[i].getAttribute("data-view") === v) mygtukai[i].setAttribute("aria-current","page");
+    else mygtukai[i].removeAttribute("aria-current");
+  }
+  window.scrollTo(0,0);
+  piesti();
+}
+
+function pasveikinimas(){
+  var h = new Date().getHours();
+  if (h < 5)  return "Labanakt.";
+  if (h < 11) return "Labas rytas.";
+  if (h < 17) return "Laba diena.";
+  if (h < 23) return "Labas vakaras.";
+  return "Labanakt.";
+}
+
+function piestiSiandien(){
+  var n = dienosNr(pasirinkta), e = diena(pasirinkta), lv = lygis(pasirinkta);
+
+  tekstas("stamp", antspaudas(pasirinkta));
+  var m = el("mouth"); if (m) m.setAttribute("d", BURNOS[lv] || BURNOS[0]);
+  var br = ANTAKIAI[lv >= 4 ? 2 : (lv >= 2 ? 1 : 0)];
+  var bl = el("browL"), brr = el("browR");
+  if (bl) bl.setAttribute("d", br[0]);
+  if (brr) brr.setAttribute("d", br[1]);
+
+  var priesStarta = (n < 1);
+  var d = el("daily"), pre = el("preNote");
+  if (d) d.hidden = priesStarta;
+  if (pre) pre.hidden = !priesStarta;
+
+  if (priesStarta){
+    var liko = diffDays(TODAY, state.start);
+    tekstas("greet", liko === 1 ? "Rytoj pradedam." : "Pradedam " + ltData(state.start) + ".");
+    tekstas("dayLine", "Devyniasdešimt dienų be cukraus, be baltų miltų, be mėsos.");
+    tekstas("dayCount", "—");
+    tekstas("tallyNote", liko === 1 ? "pradžia rytoj" : "pradžia " + ltData(state.start));
+  } else {
+    tekstas("greet", pasirinkta === TODAY ? pasveikinimas() : n + " diena.");
+    tekstas("dayLine", n > 90 ? "Devyniasdešimt dienų nueita." : EILUTES[(n-1) % EILUTES.length]);
+    tekstas("dayCount", n > 90 ? 90 : n);
+    tekstas("tallyNote", "diena iš 90");
+  }
+  var bt = el("backToday"); if (bt) bt.hidden = (pasirinkta === TODAY);
+
+  var r = el("rituals");
+  if (r){
+    var h = "";
+    for (var i = 0; i < RITUALAI.length; i++){
+      var it = RITUALAI[i], on = !!e[it.k];
+      h += '<button class="ritual" data-act="ritualas" data-key="' + it.k + '" aria-pressed="' + on + '">' +
+           '<span aria-hidden="true"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+           '<path d="M4 5 C10 4.2 18 4.2 22 5 C22.8 11 22.8 18 22 22 C16 22.8 9 22.8 4 22 C3.2 16 3.2 10 4 5 Z"/>' +
+           '<path class="tick" d="M8 13.6 C10 16.4 11.8 18.6 12.8 20 C14.8 15 17.6 10 21 5.6" stroke-width="2.4"/></svg></span>' +
+           '<span class="txt"><b>' + it.t + '</b><em>' + it.e + '</em></span></button>';
+    }
+    r.innerHTML = h;
+  }
+
+  var g = el("glasses");
+  if (g){
+    var gh = "";
+    for (var j = 1; j <= STIKLINES; j++){
+      gh += '<button class="glass" data-act="vanduo" data-n="' + j + '" aria-pressed="' + (j <= e.water) + '" aria-label="' + j + ' stiklinė">' +
+            '<svg width="24" height="32" viewBox="0 0 24 32" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path class="pour" d="M6.6 14 C9.4 12.2 13.4 15 17.4 13.4 L16.2 27.6 C15 28.2 9 28.2 7.8 27.6 Z" fill="color-mix(in srgb, var(--ink) 42%, transparent)" stroke="none"/>' +
+            '<path d="M5 4 C9 3.3 15 3.3 19 4 L16.6 28 C15 29.2 9 29.2 7.4 28 Z"/></svg></button>';
+    }
+    g.innerHTML = gh;
+  }
+  tekstas("waterVal", (e.water * 0.25).toFixed(2).replace(".", ","));
+  tekstas("waterHint", e.water >= STIKLINES ? "du litrai — gana"
+        : (e.water === 0 ? "pirma stiklinė — prieš pirmą kavą" : "liko " + (STIKLINES - e.water) + " stikl."));
+
+  tekstas("walkGoal", state.walkGoal);
+  tekstas("walkVal", e.walk);
+  tekstas("walkHint", e.walk >= state.walkGoal ? "diena nueita" : "liko " + (state.walkGoal - e.walk) + " min");
+
+  var w = el("weightInput");
+  if (w && document.activeElement !== w){
+    w.value = (typeof e.weight === "number") ? String(e.weight).replace(".", ",") : "";
+  }
+  tekstas("weightHint", svorioUzuomina(pasirinkta));
+
+  var mr = el("moodRow");
+  if (mr){
+    var mb = mr.querySelectorAll("button");
+    for (var k = 0; k < mb.length; k++){
+      mb[k].setAttribute("aria-pressed", (+mb[k].getAttribute("data-m") === e.mood) ? "true" : "false");
+    }
+  }
+  var nb = el("noteBox");
+  if (nb && document.activeElement !== nb && nb.value !== e.note) nb.value = e.note || "";
+}
+
+function svoriai(){
+  var out = [];
+  for (var k in state.days){
+    if (!state.days.hasOwnProperty(k)) continue;
+    var w = state.days[k].weight;
+    if (typeof w === "number" && w > 0){
+      var n = dienosNr(k);
+      if (n <= 90) out.push({ n:n, w:w });
+    }
+  }
+  out.sort(function(a,b){ return a.n - b.n; });
+  return out;
+}
+function svorioUzuomina(d){
+  var visi = svoriai();
+  if (!visi.length) return "pirmas svoris — atskaitos taškas";
+  var e = state.days[d];
+  if (e && typeof e.weight === "number" && e.weight > 0){
+    var sk = e.weight - visi[0].w;
+    if (Math.abs(sk) < 0.05) return "toks pat kaip pradžioje";
+    return (sk < 0 ? "−" : "+") + kg(Math.abs(sk)) + " kg nuo pradžios";
+  }
+  return "paskutinis svoris — " + kg(visi[visi.length-1].w) + " kg";
+}
+
+function piestiKelia(){
+  var n = dienosNr(pasirinkta), wi = savaitesNr(n < 1 ? 1 : n);
+  tekstas("weekTitle", EILE[wi] + " savaitė");
+  tekstas("weekRange", (wi*7+1) + "–" + (wi*7+7) + " diena");
+  tekstas("weekFocus", TEMOS[wi]);
+
+  var grid = el("grid");
+  if (grid){
+    var nToday = dienosNr(TODAY), h = "";
+    for (var i = 1; i <= 90; i++){
+      var d = addDays(state.start, i-1), lv = lygis(d), ateitis = (i > nToday);
+      h += '<button class="cell" data-act="diena" data-d="' + d + '" data-level="' + lv + '"' +
+           (d === TODAY ? ' data-today="1"' : '') + (ateitis ? ' disabled' : '') +
+           ' title="' + i + ' diena · ' + ltData(d) + ' · ' + lv + '/' + DALYS + '"' +
+           ' aria-label="' + i + ' diena, ' + lv + ' iš ' + DALYS + '"></button>';
+    }
+    grid.innerHTML = h;
+  }
+
+  var pilnos = 0, minutes = 0;
+  for (var k in state.days){
+    if (!state.days.hasOwnProperty(k)) continue;
+    if (lygis(k) === DALYS) pilnos++;
+    minutes += state.days[k].walk || 0;
+  }
+  var serija = 0, cur = TODAY;
+  if (lygis(cur) < DALYS) cur = addDays(TODAY, -1);
+  while (lygis(cur) === DALYS && diffDays(state.start, cur) >= 0){ serija++; cur = addDays(cur, -1); }
+  tekstas("statFull", pilnos);
+  tekstas("statStreak", serija);
+  tekstas("statWalk", (minutes/60).toFixed(1).replace(".", ","));
+
+  piestiKreive();
+
+  var gr = el("goalRow");
+  if (gr){
+    var gb = gr.querySelectorAll("button");
+    for (var m = 0; m < gb.length; m++){
+      gb[m].setAttribute("aria-pressed", (+gb[m].getAttribute("data-min") === state.walkGoal) ? "true" : "false");
+    }
+  }
+  var sd = el("startDate");
+  if (sd && document.activeElement !== sd) sd.value = state.start;
+
+  tekstas("saugojimas", saugojimoTekstas());
+  var isp = el("ispejimas");
+  if (isp){
+    var blogai = (dbBusena !== "paskyra" && !atmintisVeikia);
+    isp.hidden = !blogai;
+    if (blogai) isp.textContent = "Šiuo metu įrašai niekur neišsaugomi. Nusikopijuok atsarginę kopiją iš skilties „Kelias“.";
+  }
+  var bb = el("backupBox");
+  if (bb && document.activeElement !== bb){
+    try { bb.value = JSON.stringify(state); } catch(e2){ bb.value = ""; }
+  }
+}
+
+function piestiKreive(){
+  var p = svoriai(), wrap = el("chartWrap");
+  if (!wrap) return;
+  if (p.length < 2){
+    wrap.innerHTML = '<p class="quote" style="margin:0">' +
+      (p.length ? "Dar vienas svoris — ir atsiras kreivė." : "Pasisverk bent du kartus — kreivė nusipieš pati.") + '</p>';
+    tekstas("chartSummary", p.length ? "pradžia " + kg(p[0].w) + " kg" : "");
+    return;
+  }
+  var W = 320, H = 152, L = 34, R = 16, T = 16, B = 30;
+  var lo = p[0].w, hi = p[0].w;
+  for (var i = 1; i < p.length; i++){ lo = Math.min(lo, p[i].w); hi = Math.max(hi, p[i].w); }
+  var pad = Math.max(0.6, (hi - lo) * 0.25);
+  var loP = lo - pad, hiP = hi + pad;
+  var span = Math.max(14, dienosNr(TODAY), p[p.length-1].n);
+  var xmin = Math.min(1, p[0].n);
+  function X(n){ return L + (n - xmin) / (span - xmin) * (W - L - R); }
+  function Y(w){ return T + (hiP - w) / (hiP - loP) * (H - T - B); }
+  var dd = "";
+  for (var j = 0; j < p.length; j++){ dd += (j ? "L" : "M") + X(p[j].n).toFixed(1) + " " + Y(p[j].w).toFixed(1) + " "; }
+  var pirmas = p[0], last = p[p.length-1];
+  var s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Svorio kreivė">';
+  s += '<line class="axis" x1="' + L + '" y1="' + (H-B) + '" x2="' + (W-R) + '" y2="' + (H-B) + '"/>';
+  s += '<line class="base" x1="' + L + '" y1="' + Y(pirmas.w).toFixed(1) + '" x2="' + (W-R) + '" y2="' + Y(pirmas.w).toFixed(1) + '"/>';
+  s += '<text x="' + (L-8) + '" y="' + (Y(hi)+4).toFixed(1) + '" text-anchor="end">' + kg(hi) + '</text>';
+  if (kg(hi) !== kg(lo)) s += '<text x="' + (L-8) + '" y="' + (Y(lo)+4).toFixed(1) + '" text-anchor="end">' + kg(lo) + '</text>';
+  s += '<text x="' + L + '" y="' + (H-10) + '">' + (xmin < 1 ? "prieš pradžią" : "1 d.") + '</text>';
+  s += '<text x="' + (W-R) + '" y="' + (H-10) + '" text-anchor="end">' + span + ' d.</text>';
+  s += '<path class="curve" d="' + dd + '"/>';
+  for (var q = 0; q < p.length; q++){
+    var last_ = (q === p.length-1);
+    s += '<circle class="' + (last_ ? "last" : "dot") + '" cx="' + X(p[q].n).toFixed(1) + '" cy="' + Y(p[q].w).toFixed(1) +
+         '" r="' + (last_ ? 5 : 3.4) + '"><title>' + (p[q].n < 1 ? "prieš pradžią" : p[q].n + " diena") + ' · ' + kg(p[q].w) + ' kg</title></circle>';
+  }
+  var lx = X(last.n), kryptis = (lx > W - 70) ? "end" : "start";
+  s += '<text class="value" x="' + (kryptis === "end" ? lx - 9 : lx + 9).toFixed(1) + '" y="' + (Y(last.w) - 11).toFixed(1) +
+       '" text-anchor="' + kryptis + '">' + kg(last.w) + ' kg</text></svg>';
+  wrap.innerHTML = s;
+
+  var sk = last.w - pirmas.w;
+  var mv = p.length % 10, mv2 = p.length % 100;
+  var zodis = (mv === 1 && mv2 !== 11) ? "matavimas" : ((mv === 0 || (mv2 >= 11 && mv2 <= 19)) ? "matavimų" : "matavimai");
+  tekstas("chartSummary", "pradžia " + kg(pirmas.w) + " kg · dabar " + kg(last.w) + " kg · " +
+    (Math.abs(sk) < 0.05 ? "be pokyčio" : (sk < 0 ? "−" : "+") + kg(Math.abs(sk)) + " kg") + " · " + p.length + " " + zodis);
+}
+
+function piestiValgius(){
+  var n = dienosNr(pasirinkta);
+  var baze = (n >= 1 ? n - 1 : 0);
+  var idx = (((baze + state.menuOffset) % MENIU.length) + MENIU.length) % MENIU.length;
+  var m = MENIU[idx];
+  tekstas("menuNo", "meniu " + (idx+1) + " / " + MENIU.length);
+  var list = el("menuList");
+  if (list){
+    list.innerHTML =
+      '<div class="meal"><dt>pusryčiai</dt><dd>' + m.p + '</dd></div>' +
+      '<div class="meal"><dt>pietūs</dt><dd>' + m.pi + '</dd></div>' +
+      '<div class="meal"><dt>vakarienė</dt><dd>' + m.v + '</dd></div>' +
+      '<div class="meal"><dt>užkandis</dt><dd>' + m.u + '</dd></div>';
+  }
+}
+
+function piestiUzrasus(){
+  var raktai = [];
+  for (var k in state.days){
+    if (!state.days.hasOwnProperty(k)) continue;
+    if (String(state.days[k].note || "").trim()) raktai.push(k);
+  }
+  raktai.sort().reverse();
+  var mv = raktai.length % 10, mv2 = raktai.length % 100;
+  var zodis = (mv === 1 && mv2 !== 11) ? "įrašas" : ((mv === 0 || (mv2 >= 11 && mv2 <= 19)) ? "įrašų" : "įrašai");
+  tekstas("notesCount", raktai.length + " " + zodis);
+  var list = el("notesList");
+  if (!list) return;
+  if (!raktai.length){
+    list.innerHTML = '<p class="quote">Kol kas tuščia. Kiekvieną vakarą — viena eilutė skiltyje „Šiandien“.</p>';
+    return;
+  }
+  var h = "";
+  for (var i = 0; i < raktai.length; i++){
+    var d = raktai[i], e = state.days[d];
+    var nuot = ["","lengva","vidutiniškai","sunku"][e.mood] || "";
+    h += '<div class="entry"><div class="when">' + dienosNr(d) + ' diena · ' + ltData(d) + (nuot ? ' · ' + nuot : '') + '</div>' +
+         '<div class="what">' + saugus(e.note) + '</div></div>';
+  }
+  list.innerHTML = h;
+}
+
+function piesti(){
+  try { piestiSiandien(); } catch(e){}
+  try { piestiKelia(); } catch(e){}
+  try { piestiValgius(); } catch(e){}
+  try { piestiUzrasus(); } catch(e){}
+}
+
+/* ============ veiksmai ============ */
+function veiksmas(act, b){
+  var e = diena(pasirinkta);
+  if (act === "ritualas"){
+    var k = b.getAttribute("data-key");
+    e[k] = !e[k]; saugoti(); piesti(); return;
+  }
+  if (act === "vanduo"){
+    var n = +b.getAttribute("data-n");
+    e.water = (e.water === n) ? n - 1 : n; saugoti(); piesti(); return;
+  }
+  if (act === "ejimas"){
+    var dlt = +b.getAttribute("data-delta");
+    e.walk = Math.max(0, Math.min(300, (e.walk || 0) + dlt)); saugoti(); piesti(); return;
+  }
+  if (act === "nuotaika"){
+    var m = +b.getAttribute("data-m");
+    e.mood = (e.mood === m) ? 0 : m; saugoti(); piesti(); return;
+  }
+  if (act === "diena"){
+    pasirinkta = b.getAttribute("data-d"); piesti(); rodyti("siandien"); return;
+  }
+  if (act === "siandien"){ pasirinkta = TODAY; piesti(); return; }
+  if (act === "rodyti"){ rodyti(b.getAttribute("data-view")); return; }
+  if (act === "meniu"){ state.menuOffset += +b.getAttribute("data-delta"); saugoti(); piestiValgius(); return; }
+  if (act === "tikslas"){ state.walkGoal = +b.getAttribute("data-min"); saugoti(); piesti(); return; }
+  if (act === "atkurti"){
+    var box = el("backupBox"), r = null;
+    try { r = JSON.parse((box && box.value || "").trim()); } catch(e2){}
+    if (!r || typeof r !== "object" || !r.days){ window.alert("Neatpažinau teksto — įklijuok visą kopiją nuo { iki }."); return; }
+    if (!window.confirm("Pakeisti dabartinius įrašus šia kopija?")) return;
+    state = r;
+    if (!state.start) state.start = PRADZIA;
+    if (typeof state.menuOffset !== "number") state.menuOffset = 0;
+    if (typeof state.walkGoal !== "number") state.walkGoal = 30;
+    pasirinkta = TODAY; saugoti(); piesti();
+    window.alert("Atkurta.");
+    return;
+  }
+  if (act === "isNaujo"){
+    if (!window.confirm("Ištrinti visas žymas ir pradėti nuo šiandien?")) return;
+    state = { start: TODAY, days:{}, menuOffset:0, walkGoal:30, pradziaSutvarkyta:true };
+    pasirinkta = TODAY; saugoti(); piesti();
+    return;
+  }
+}
+
+function rastiMygtuka(t){
+  /* savo paieška aukštyn — nesiremiam vien closest(), kad veiktų ir senesnėse naršyklėse */
+  var n = 0;
+  while (t && n < 12){
+    if (t.getAttribute && t.getAttribute("data-act")) return t;
+    t = t.parentNode; n++;
+  }
+  return null;
+}
+var lietimoLaikas = 0;
+function apdorotiPaspaudima(ev){
+  var b = rastiMygtuka(ev.target);
+  if (!b || b.disabled) return;
+  if (ev.type === "touchend"){
+    lietimoLaikas = Date.now();
+    if (ev.cancelable) ev.preventDefault();   /* slopinam antrą, sintetinį paspaudimą */
+  } else if (Date.now() - lietimoLaikas < 700){
+    return;                                    /* jau apdorota per lietimą */
+  }
+  try { veiksmas(b.getAttribute("data-act"), b); } catch(e){}
+}
+document.addEventListener("click", apdorotiPaspaudima, false);
+document.addEventListener("touchend", apdorotiPaspaudima, false);
+diag("mygtukai prijungti ✓");
+
+document.addEventListener("input", function(ev){
+  var t = ev.target;
+  if (!t || !t.id) return;
+  try {
+    if (t.id === "noteBox"){ diena(pasirinkta).note = t.value; saugoti(); }
+    else if (t.id === "weightInput"){
+      var raw = String(t.value).replace(",", ".").trim();
+      var v = parseFloat(raw);
+      diena(pasirinkta).weight = (raw === "" || isNaN(v) || v <= 0) ? null : Math.round(v*10)/10;
+      saugoti();
+      tekstas("weightHint", svorioUzuomina(pasirinkta));
+      piestiKreive();
+    }
+  } catch(e){}
+}, false);
+
+document.addEventListener("change", function(ev){
+  var t = ev.target;
+  if (!t || t.id !== "startDate") return;
+  try {
+    if (!t.value){ t.value = state.start; return; }
+    state.start = t.value; saugoti(); piesti();
+  } catch(e){}
+}, false);
+
+/* ============ saugojimas paskyroje ============
+   Jungiamės TIK po to, kai viskas nupiešta, ir viskas apgaubta try/catch:
+   kad ir kas čia nutiktų, mygtukai veikia toliau. */
+function saugojimoTekstas(){
+  if (dbBusena === "paskyra")  return "įrašai saugomi tavo paskyroje — nedings ir persikrovus";
+  if (dbBusena === "tikrinam") return "tikrinama, kur saugoti įrašus…";
+  if (atmintisVeikia)          return "įrašai saugomi tik šiame telefone — pasidaryk atsarginę kopiją";
+  return "įrašai niekur neišsaugomi — pasidaryk atsarginę kopiją";
+}
+function stumti(){
+  if (!dbDoc) return;
+  var kopija;
+  try { kopija = JSON.parse(JSON.stringify(state)); } catch(e){ return; }
+  try {
+    dbDoc.set(kopija).then(function(){
+      if (dbBusena !== "paskyra"){ dbBusena = "paskyra"; tekstas("saugojimas", saugojimoTekstas()); }
+    }, function(){
+      dbBusena = "klaida"; tekstas("saugojimas", saugojimoTekstas());
+    });
+  } catch(e){}
+}
+function turiZymiu(o){
+  var d = (o && o.days) || {};
+  for (var k in d){ if (d.hasOwnProperty(k) && !tuscia(d[k])) return true; }
+  return false;
+}
+function priimti(r){
+  if (!r || typeof r !== "object" || !r.days || typeof r.days !== "object") return;
+  if ((r.updated || 0) < (state.updated || 0)){ stumti(); return; }   /* mūsiškiai naujesni */
+  try { if (JSON.stringify(r) === JSON.stringify(state)) return; } catch(e){}
+  state = r;
+  if (!state.start) state.start = PRADZIA;
+  if (!state.days || typeof state.days !== "object") state.days = {};
+  if (typeof state.menuOffset !== "number") state.menuOffset = 0;
+  if (typeof state.walkGoal !== "number") state.walkGoal = 30;
+  irasyti();
+  piesti();
+}
+function pajungti(){
+  if (!window.claude || typeof window.claude.use !== "function") return;
+  var pr;
+  try { pr = window.claude.use("db"); } catch(e){ return; }
+  if (!pr || typeof pr.then !== "function") return;
+  pr.then(function(db){
+    try {
+      if (!db || typeof db.doc !== "function") { tekstas("saugojimas", saugojimoTekstas()); return; }
+      var ref = db.doc("kelias/state");
+      if (!ref || typeof ref.set !== "function" || typeof ref.onSnapshot !== "function") return;
+      dbDoc = ref;
+      ref.onSnapshot(function(snap){
+        try {
+          dbBusena = "paskyra";
+          if (!snap || !snap.exists){
+            if (turiZymiu(state)) stumti();       /* serveryje tuščia — nunešam savo */
+            tekstas("saugojimas", saugojimoTekstas());
+            return;
+          }
+          priimti(typeof snap.data === "function" ? snap.data() : null);
+          tekstas("saugojimas", saugojimoTekstas());
+        } catch(e){}
+      }, function(){
+        dbDoc = null;
+        dbBusena = "klaida";
+        tekstas("saugojimas", saugojimoTekstas());
+      });
+    } catch(e){
+      dbDoc = null;
+      tekstas("saugojimas", saugojimoTekstas());
+    }
+  }, function(){ tekstas("saugojimas", saugojimoTekstas()); });
+}
+
+/* ============ paleidimas ============ */
+try { piestiSiandien(); diag("šiandien ✓"); } catch(e){ diag("KLAIDA piešiant šiandien: " + (e && e.message)); }
+try { piestiKelia();   diag("kelias ✓"); }   catch(e){ diag("KLAIDA piešiant kelią: " + (e && e.message)); }
+try { piestiValgius(); diag("valgiai ✓"); }  catch(e){ diag("KLAIDA piešiant valgius: " + (e && e.message)); }
+try { piestiUzrasus(); diag("užrašai ✓"); }  catch(e){ diag("KLAIDA piešiant užrašus: " + (e && e.message)); }
+setTimeout(function(){ try { pajungti(); } catch(e){} }, 0);
+})();
+</script>
+
+</body>
+</html>
