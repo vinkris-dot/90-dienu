@@ -520,6 +520,31 @@ function saugus(s){ return String(s).replace(/[<>&]/g, function(c){ return {"<":
 function el(id){ return document.getElementById(id); }
 function tekstas(id, t){ var x = el(id); if (x) x.textContent = t; }
 
+/* ============ perkėlimas nuoroda ============
+   Adreso gale gavus #imk=... , duomenys įrašomi į šį telefoną.
+   Užpildomos tik tuščios dienos — kas jau pažymėta, lieka nepaliesta. */
+function importuoti(){
+  var h = (window.location && window.location.hash) || "";
+  if (h.indexOf("#imk=") !== 0) return;
+  var kodas = h.slice(5).replace(/-/g, "+").replace(/_/g, "/");
+  var r = null;
+  try { r = JSON.parse(decodeURIComponent(escape(atob(kodas)))); }
+  catch(e){ diag("KLAIDA: nepavyko nuskaityti perkėlimo nuorodos"); return; }
+  if (!r || typeof r !== "object") return;
+  if (r.start) state.start = r.start;
+  if (typeof r.walkGoal === "number") state.walkGoal = r.walkGoal;
+  var d = r.days || {}, n = 0;
+  for (var k in d){
+    if (!d.hasOwnProperty(k)) continue;
+    if (tuscia(state.days[k])){ state.days[k] = d[k]; n++; }
+  }
+  saugoti();
+  try { window.history.replaceState(null, "", window.location.pathname); }
+  catch(e2){ try { window.location.hash = ""; } catch(e3){} }
+  perkeltaDienu = n;
+}
+var perkeltaDienu = 0;
+
 /* ============ piešimas ============ */
 var VIEWS = ["siandien","kelias","valgiai","uzrasai"];
 var rodomas = "siandien";
@@ -699,6 +724,10 @@ function piestiKelia(){
     var blogai = (dbBusena !== "paskyra" && !atmintisVeikia);
     isp.hidden = !blogai;
     if (blogai) isp.textContent = "Šiuo metu įrašai niekur neišsaugomi. Nusikopijuok atsarginę kopiją iš skilties „Kelias“.";
+  }
+  if (perkeltaDienu > 0){
+    var iz = el("ispejimas");
+    if (iz){ iz.hidden = false; iz.textContent = "Perkelta dienų: " + perkeltaDienu + ". Viskas jau šiame telefone."; }
   }
   var bb = el("backupBox");
   if (bb && document.activeElement !== bb){
@@ -971,6 +1000,7 @@ function pajungti(){
 }
 
 /* ============ paleidimas ============ */
+try { importuoti(); } catch(e){ diag("KLAIDA perkeliant: " + (e && e.message)); }
 try { piestiSiandien(); diag("šiandien ✓"); } catch(e){ diag("KLAIDA piešiant šiandien: " + (e && e.message)); }
 try { piestiKelia();   diag("kelias ✓"); }   catch(e){ diag("KLAIDA piešiant kelią: " + (e && e.message)); }
 try { piestiValgius(); diag("valgiai ✓"); }  catch(e){ diag("KLAIDA piešiant valgius: " + (e && e.message)); }
