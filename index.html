@@ -341,7 +341,14 @@ var diagEil = [];
 function diag(t){
   diagEil.push(t);
   var d = document.getElementById("diag");
-  if (d) d.textContent = diagEil.join(" · ");
+  if (!d) return;
+  /* eilutė rodoma tik tada, kai kas nors sugedo (arba kai adreso gale prirašai #diag) */
+  var blogai = diagEil.join(" ").indexOf("KLAIDA") >= 0;
+  if (blogai || (window.location && window.location.hash === "#diag")){
+    d.textContent = diagEil.join(" · ");
+  } else {
+    d.textContent = "";
+  }
 }
 window.onerror = function(msg, src, line, col){
   diag("KLAIDA: " + msg + " (eil. " + line + ":" + col + ")");
