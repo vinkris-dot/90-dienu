@@ -260,7 +260,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
         </div>
         <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
-        <p class="tiny" id="versija" style="margin:0">versija 8 · tavo adresu</p>
+        <p class="tiny" id="versija" style="margin:0">versija 9 · veikia be interneto</p>
       </div>
     </section>
 
@@ -358,7 +358,7 @@ window.addEventListener("unhandledrejection", function(ev){
   var r = ev && ev.reason;
   diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
 });
-diag("paleista v8");
+diag("paleista v9");
 
 /* ============ duomenys ============ */
 var KEY = "devynios90.v1";
@@ -492,7 +492,6 @@ irasyti();
 
 diag("būsena ✓");
 var pasirinkta = TODAY;
-var dbDoc = null, dbBusena = "tikrinam", stumimas = null;
 
 function diena(d){
   var e = state.days[d];
@@ -505,7 +504,6 @@ function diena(d){
 function saugoti(){
   state.updated = Date.now();
   irasyti();
-  if (dbDoc){ clearTimeout(stumimas); stumimas = setTimeout(stumti, 500); }
 }
 function dienosNr(d){ return diffDays(state.start, d) + 1; }
 function savaitesNr(n){ return Math.min(12, Math.max(0, Math.ceil(n/7)-1)); }
@@ -718,10 +716,11 @@ function piestiKelia(){
   var sd = el("startDate");
   if (sd && document.activeElement !== sd) sd.value = state.start;
 
-  tekstas("saugojimas", saugojimoTekstas());
+  tekstas("saugojimas", atmintisVeikia ? "įrašai saugomi šiame telefone — kartą per savaitę nusikopijuok atsarginę kopiją"
+                                       : "įrašai niekur neišsaugomi — pasidaryk atsarginę kopiją");
   var isp = el("ispejimas");
   if (isp){
-    var blogai = (dbBusena !== "paskyra" && !atmintisVeikia);
+    var blogai = !atmintisVeikia;
     isp.hidden = !blogai;
     if (blogai) isp.textContent = "Šiuo metu įrašai niekur neišsaugomi. Nusikopijuok atsarginę kopiją iš skilties „Kelias“.";
   }
@@ -887,10 +886,18 @@ function rastiMygtuka(t){
   return null;
 }
 var lietimoLaikas = 0;
+var lietimas = null;   /* kur ir kada pirštas prisilietė */
 function apdorotiPaspaudima(ev){
   var b = rastiMygtuka(ev.target);
   if (!b || b.disabled) return;
   if (ev.type === "touchend"){
+    /* slinkimas ar ilgas laikymas — ne paspaudimas */
+    var t = ev.changedTouches && ev.changedTouches[0];
+    if (!lietimas || !t) return;
+    var dx = Math.abs(t.clientX - lietimas.x), dy = Math.abs(t.clientY - lietimas.y);
+    var trukme = Date.now() - lietimas.t;
+    lietimas = null;
+    if (dx > 10 || dy > 10 || trukme > 600) return;
     lietimoLaikas = Date.now();
     if (ev.cancelable) ev.preventDefault();   /* slopinam antrą, sintetinį paspaudimą */
   } else if (Date.now() - lietimoLaikas < 700){
@@ -898,6 +905,10 @@ function apdorotiPaspaudima(ev){
   }
   try { veiksmas(b.getAttribute("data-act"), b); } catch(e){}
 }
+document.addEventListener("touchstart", function(ev){
+  var t = ev.touches && ev.touches[0];
+  lietimas = (t && ev.touches.length === 1) ? { x:t.clientX, y:t.clientY, t:Date.now() } : null;
+}, { passive:true });
 document.addEventListener("click", apdorotiPaspaudima, false);
 document.addEventListener("touchend", apdorotiPaspaudima, false);
 diag("mygtukai prijungti ✓");
@@ -927,76 +938,25 @@ document.addEventListener("change", function(ev){
   } catch(e){}
 }, false);
 
-/* ============ saugojimas paskyroje ============
-   Jungiamės TIK po to, kai viskas nupiešta, ir viskas apgaubta try/catch:
-   kad ir kas čia nutiktų, mygtukai veikia toliau. */
-function saugojimoTekstas(){
-  if (dbBusena === "paskyra")  return "įrašai saugomi tavo paskyroje — nedings ir persikrovus";
-  if (dbBusena === "tikrinam") return "tikrinama, kur saugoti įrašus…";
-  if (atmintisVeikia)          return "įrašai saugomi tik šiame telefone — pasidaryk atsarginę kopiją";
-  return "įrašai niekur neišsaugomi — pasidaryk atsarginę kopiją";
-}
-function stumti(){
-  if (!dbDoc) return;
-  var kopija;
-  try { kopija = JSON.parse(JSON.stringify(state)); } catch(e){ return; }
-  try {
-    dbDoc.set(kopija).then(function(){
-      if (dbBusena !== "paskyra"){ dbBusena = "paskyra"; tekstas("saugojimas", saugojimoTekstas()); }
-    }, function(){
-      dbBusena = "klaida"; tekstas("saugojimas", saugojimoTekstas());
-    });
-  } catch(e){}
-}
-function turiZymiu(o){
-  var d = (o && o.days) || {};
-  for (var k in d){ if (d.hasOwnProperty(k) && !tuscia(d[k])) return true; }
-  return false;
-}
-function priimti(r){
-  if (!r || typeof r !== "object" || !r.days || typeof r.days !== "object") return;
-  if ((r.updated || 0) < (state.updated || 0)){ stumti(); return; }   /* mūsiškiai naujesni */
-  try { if (JSON.stringify(r) === JSON.stringify(state)) return; } catch(e){}
-  state = r;
-  if (!state.start) state.start = PRADZIA;
-  if (!state.days || typeof state.days !== "object") state.days = {};
-  if (typeof state.menuOffset !== "number") state.menuOffset = 0;
-  if (typeof state.walkGoal !== "number") state.walkGoal = 30;
-  irasyti();
+/* ============ data grįžus į programėlę ============
+   iPhone programėlės neuždaro, o užmigdo — po vidurnakčio be šito ji manytų, kad vis dar vakar. */
+function tikrintiData(){
+  var dabar;
+  try { dabar = iso(new Date()); } catch(e){ return; }
+  if (dabar === TODAY) return;
+  var buvo = TODAY;
+  TODAY = dabar;
+  if (pasirinkta === buvo) pasirinkta = TODAY;
   piesti();
 }
-function pajungti(){
-  if (!window.claude || typeof window.claude.use !== "function") return;
-  var pr;
-  try { pr = window.claude.use("db"); } catch(e){ return; }
-  if (!pr || typeof pr.then !== "function") return;
-  pr.then(function(db){
-    try {
-      if (!db || typeof db.doc !== "function") { tekstas("saugojimas", saugojimoTekstas()); return; }
-      var ref = db.doc("kelias/state");
-      if (!ref || typeof ref.set !== "function" || typeof ref.onSnapshot !== "function") return;
-      dbDoc = ref;
-      ref.onSnapshot(function(snap){
-        try {
-          dbBusena = "paskyra";
-          if (!snap || !snap.exists){
-            if (turiZymiu(state)) stumti();       /* serveryje tuščia — nunešam savo */
-            tekstas("saugojimas", saugojimoTekstas());
-            return;
-          }
-          priimti(typeof snap.data === "function" ? snap.data() : null);
-          tekstas("saugojimas", saugojimoTekstas());
-        } catch(e){}
-      }, function(){
-        dbDoc = null;
-        dbBusena = "klaida";
-        tekstas("saugojimas", saugojimoTekstas());
-      });
-    } catch(e){
-      dbDoc = null;
-      tekstas("saugojimas", saugojimoTekstas());
-    }
-  }, function(){ tekstas("saugojimas", saugojimoTekstas()); });
+document.addEventListener("visibilitychange", function(){ if (!document.hidden) tikrintiData(); }, false);
+window.addEventListener("pageshow", tikrintiData, false);
+window.addEventListener("focus", tikrintiData, false);
+setInterval(tikrintiData, 60000);
+
+/* ============ veikimas be interneto ============ */
+if ("serviceWorker" in navigator){
+  try { navigator.serviceWorker.register("./sw.js"); } catch(e){}
 }
 
 /* ============ paleidimas ============ */
@@ -1005,7 +965,6 @@ try { piestiSiandien(); diag("šiandien ✓"); } catch(e){ diag("KLAIDA piešian
 try { piestiKelia();   diag("kelias ✓"); }   catch(e){ diag("KLAIDA piešiant kelią: " + (e && e.message)); }
 try { piestiValgius(); diag("valgiai ✓"); }  catch(e){ diag("KLAIDA piešiant valgius: " + (e && e.message)); }
 try { piestiUzrasus(); diag("užrašai ✓"); }  catch(e){ diag("KLAIDA piešiant užrašus: " + (e && e.message)); }
-setTimeout(function(){ try { pajungti(); } catch(e){} }, 0);
 })();
 </script>
 
