@@ -1,7 +1,7 @@
 /* 90 dienų — veikimas be interneto.
    Puslapis: pirma tinklas (kad visada gautum naujausią), nesant ryšio — kopija.
    Šriftai: pirma kopija, nesant — tinklas. */
-var KOPIJA = "90-dienu-v10";
+var KOPIJA = "90-dienu-v11";
 var PAGRINDAS = ["./", "./index.html"];
 
 self.addEventListener("install", function(ev){
