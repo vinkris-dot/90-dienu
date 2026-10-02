@@ -131,6 +131,20 @@ dl{margin:0}
 .entry .when{font-size:14.5px; color:var(--ink-3)}
 .entry .what{font-family:"Caveat",cursive; font-size:23px; line-height:1.35; margin-top:4px}
 
+.photos{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.photo{width:76px; height:76px; border:1.5px solid var(--ink); background:transparent; padding:0;
+  overflow:hidden; cursor:pointer}
+.photo img{width:100%; height:100%; object-fit:cover; display:block}
+.addphoto{width:76px; height:76px; border:1.5px dashed var(--ink-3); display:grid; place-items:center;
+  color:var(--ink-2); font-size:30px; line-height:1; cursor:pointer; position:relative; font-family:"Patrick Hand",cursive}
+.addphoto input{position:absolute; inset:0; opacity:0; width:100%; height:100%; cursor:pointer}
+.photos.small .photo,.photos.small .addphoto{width:58px; height:58px}
+.viewer{position:fixed; inset:0; z-index:40; background:rgba(0,0,0,.92); display:grid;
+  grid-template-rows:1fr auto; gap:14px; padding:18px}
+.viewer img{max-width:100%; max-height:100%; object-fit:contain; margin:auto; display:block}
+.viewer .row{justify-content:center; margin:0}
+.viewer .btn{border-color:#EFEAE0; color:#EFEAE0}
+.viewer .when{color:#A49C8F; text-align:center; font-size:15px}
 nav{position:fixed; left:0; right:0; bottom:0; z-index:10; background:var(--paper);
   border-top:1px solid var(--hair); padding-bottom:env(safe-area-inset-bottom,0px)}
 nav .bar{max-width:480px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr)}
@@ -207,6 +221,12 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           </div>
         </div>
 
+        <div class="block">
+          <div class="top"><b>lėkštės nuotraukos</b><span id="photoCount"></span></div>
+          <div class="photos" id="photos"></div>
+          <p class="tiny" style="margin:12px 0 0">Nufotografuok prieš valgant — lėkštė atrodo kitaip, kai žinai, kad ją matysi.</p>
+        </div>
+
         <p class="cap" style="margin-top:26px">kaip buvo</p>
         <div class="row" id="moodRow" style="margin-top:0">
           <button class="btn small" data-act="nuotaika" data-m="1">lengva</button>
@@ -260,7 +280,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
         </div>
         <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
-        <p class="tiny" id="versija" style="margin:0">versija 12 · lėkštė 350 g</p>
+        <p class="tiny" id="versija" style="margin:0">versija 13 · su nuotraukomis</p>
       </div>
     </section>
 
@@ -366,7 +386,7 @@ window.addEventListener("unhandledrejection", function(ev){
   var r = ev && ev.reason;
   diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
 });
-diag("paleista v12");
+diag("paleista v13");
 
 /* ============ duomenys ============ */
 var KEY = "devynios90.v1";
@@ -554,6 +574,164 @@ function saugus(s){ return String(s).replace(/[<>&]/g, function(c){ return {"<":
 function el(id){ return document.getElementById(id); }
 function tekstas(id, t){ var x = el(id); if (x) x.textContent = t; }
 
+/* ============ nuotraukos (IndexedDB — telpa šimtai, localStorage netelpa) ============ */
+var fotoDb = null;
+function atidarytiFoto(){
+  return new Promise(function(res){
+    if (fotoDb) return res(fotoDb);
+    if (!window.indexedDB) return res(null);
+    try {
+      var req = indexedDB.open("devynios90-foto", 1);
+      req.onupgradeneeded = function(){
+        var db = req.result;
+        if (!db.objectStoreNames.contains("nuotraukos")){
+          var st = db.createObjectStore("nuotraukos", { keyPath:"id" });
+          st.createIndex("d", "d", { unique:false });
+        }
+      };
+      req.onsuccess = function(){ fotoDb = req.result; res(fotoDb); };
+      req.onerror = function(){ res(null); };
+    } catch(e){ res(null); }
+  });
+}
+function fotoDienos(d){
+  return atidarytiFoto().then(function(db){
+    if (!db) return [];
+    return new Promise(function(res){
+      try {
+        var out = [];
+        var cur = db.transaction("nuotraukos").objectStore("nuotraukos").index("d").openCursor(IDBKeyRange.only(d));
+        cur.onsuccess = function(){ var k = cur.result; if (k){ out.push(k.value); k.continue(); } else res(out); };
+        cur.onerror = function(){ res(out); };
+      } catch(e){ res([]); }
+    });
+  });
+}
+function fotoVisos(){
+  return atidarytiFoto().then(function(db){
+    if (!db) return [];
+    return new Promise(function(res){
+      try {
+        var out = [];
+        var cur = db.transaction("nuotraukos").objectStore("nuotraukos").openCursor();
+        cur.onsuccess = function(){ var k = cur.result; if (k){ out.push(k.value); k.continue(); } else res(out); };
+        cur.onerror = function(){ res(out); };
+      } catch(e){ res([]); }
+    });
+  });
+}
+function fotoIrasyti(d, blob){
+  return atidarytiFoto().then(function(db){
+    if (!db) throw new Error("nėra saugyklos");
+    return new Promise(function(res, rej){
+      var tx = db.transaction("nuotraukos", "readwrite");
+      var id = d + "-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8);
+      tx.objectStore("nuotraukos").put({ id: id, d: d, t: Date.now(), blob: blob });
+      tx.oncomplete = function(){ res(); };
+      tx.onerror = function(){ rej(tx.error); };
+    });
+  });
+}
+function fotoTrinti(id){
+  return atidarytiFoto().then(function(db){
+    if (!db) return;
+    return new Promise(function(res){
+      var tx = db.transaction("nuotraukos", "readwrite");
+      tx.objectStore("nuotraukos").delete(id);
+      tx.oncomplete = function(){ res(); };
+      tx.onerror = function(){ res(); };
+    });
+  });
+}
+/* sumažinam iki 1200 px ilgesnės kraštinės — apie 150 KB vietoj 3–5 MB */
+function sumazinti(file){
+  return new Promise(function(res, rej){
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function(){
+      try {
+        var MAX = 1200, w = img.naturalWidth, h = img.naturalHeight;
+        var k = Math.min(1, MAX / Math.max(w, h));
+        var cv = document.createElement("canvas");
+        cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+        cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+        URL.revokeObjectURL(url);
+        if (cv.toBlob){
+          cv.toBlob(function(b){ b ? res(b) : rej(new Error("tuščia")); }, "image/jpeg", 0.74);
+        } else {
+          var du = cv.toDataURL("image/jpeg", 0.74), bin = atob(du.split(",")[1]), arr = new Uint8Array(bin.length);
+          for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+          res(new Blob([arr], { type:"image/jpeg" }));
+        }
+      } catch(e){ URL.revokeObjectURL(url); rej(e); }
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error("neatpažintas paveikslėlis")); };
+    img.src = url;
+  });
+}
+var fotoUrl = { siandien:[], uzrasai:[] };   /* object URL po krepšelį, kad vienos skilties perpiešimas neatimtų kitos miniatiūrų */
+function atlaisvintiUrl(kr){
+  var l = fotoUrl[kr] || [];
+  for (var i = 0; i < l.length; i++){ try { URL.revokeObjectURL(l[i]); } catch(e){} }
+  fotoUrl[kr] = [];
+}
+function fotoMygtukas(d){
+  return '<label class="addphoto" title="Pridėti nuotrauką">+<input type="file" accept="image/*" data-foto-d="' + d + '"></label>';
+}
+function fotoHtml(saras, kr){
+  var h = "";
+  for (var i = 0; i < saras.length; i++){
+    var u = URL.createObjectURL(saras[i].blob); fotoUrl[kr].push(u);
+    h += '<button class="photo" data-act="foto" data-id="' + saras[i].id + '" data-d="' + saras[i].d + '" aria-label="Nuotrauka"><img src="' + u + '" alt=""></button>';
+  }
+  return h;
+}
+function piestiNuotraukas(){
+  var box = el("photos"); if (!box) return;
+  var d = pasirinkta;
+  fotoDienos(d).then(function(saras){
+    if (pasirinkta !== d) return;
+    saras.sort(function(a,b){ return a.t - b.t; });
+    atlaisvintiUrl("siandien");
+    box.innerHTML = fotoHtml(saras, "siandien") + fotoMygtukas(d);
+    tekstas("photoCount", saras.length ? saras.length + (saras.length === 1 ? " nuotrauka" : (saras.length < 10 ? " nuotraukos" : " nuotraukų")) : "");
+  });
+}
+var fotoSaras = {};   /* id -> įrašas, kad peržiūra rastų */
+function rodytiNuotrauka(id){
+  atidarytiFoto().then(function(db){
+    if (!db) return;
+    var req = db.transaction("nuotraukos").objectStore("nuotraukos").get(id);
+    req.onsuccess = function(){
+      var r = req.result; if (!r) return;
+      var u = URL.createObjectURL(r.blob);
+      var v = document.createElement("div");
+      v.className = "viewer"; v.id = "viewer";
+      v.innerHTML = '<img src="' + u + '" alt="">' +
+        '<div><div class="when">' + dienosNr(r.d) + ' diena · ' + ltData(r.d) + '</div>' +
+        '<div class="row" style="margin-top:12px"><button class="btn small" data-act="fotoUzdaryti">uždaryti</button>' +
+        '<button class="btn small" data-act="fotoTrinti" data-id="' + r.id + '">ištrinti</button></div></div>';
+      document.body.appendChild(v);
+      v.setAttribute("data-url", u);
+    };
+  });
+}
+function uzdarytiNuotrauka(){
+  var v = el("viewer"); if (!v) return;
+  try { URL.revokeObjectURL(v.getAttribute("data-url")); } catch(e){}
+  v.parentNode.removeChild(v);
+}
+document.addEventListener("change", function(ev){
+  var t = ev.target;
+  if (!t || !t.getAttribute || !t.getAttribute("data-foto-d")) return;
+  var d = t.getAttribute("data-foto-d"), f = t.files && t.files[0];
+  if (!f) return;
+  t.disabled = true;
+  sumazinti(f).then(function(blob){ return fotoIrasyti(d, blob); })
+    .then(function(){ piestiNuotraukas(); })
+    .catch(function(e){ window.alert("Nepavyko išsaugoti nuotraukos: " + (e && e.message ? e.message : e)); piestiNuotraukas(); });
+}, false);
+
 /* ============ perkėlimas nuoroda ============
    Adreso gale gavus #imk=... , duomenys įrašomi į šį telefoną.
    Užpildomos tik tuščios dienos — kas jau pažymėta, lieka nepaliesta. */
@@ -681,6 +859,7 @@ function piestiSiandien(){
   }
   var nb = el("noteBox");
   if (nb && document.activeElement !== nb && nb.value !== e.note) nb.value = e.note || "";
+  piestiNuotraukas();
 }
 
 function svoriai(){
@@ -834,27 +1013,40 @@ function piestiValgius(){
 }
 
 function piestiUzrasus(){
-  var raktai = [];
+  fotoVisos().then(function(visos){
+    var pagalDiena = {};
+    for (var i = 0; i < visos.length; i++){ (pagalDiena[visos[i].d] = pagalDiena[visos[i].d] || []).push(visos[i]); }
+    piestiUzrasus2(pagalDiena);
+  }, function(){ piestiUzrasus2({}); });
+}
+function piestiUzrasus2(pagalDiena){
+  var raktai = [], matyta = {};
   for (var k in state.days){
     if (!state.days.hasOwnProperty(k)) continue;
-    if (String(state.days[k].note || "").trim()) raktai.push(k);
+    if (String(state.days[k].note || "").trim()){ raktai.push(k); matyta[k] = true; }
   }
+  for (var f in pagalDiena){ if (pagalDiena.hasOwnProperty(f) && !matyta[f]){ raktai.push(f); matyta[f] = true; } }
   raktai.sort().reverse();
   var mv = raktai.length % 10, mv2 = raktai.length % 100;
   var zodis = (mv === 1 && mv2 !== 11) ? "įrašas" : ((mv === 0 || (mv2 >= 11 && mv2 <= 19)) ? "įrašų" : "įrašai");
   tekstas("notesCount", raktai.length + " " + zodis);
   var list = el("notesList");
   if (!list) return;
+  atlaisvintiUrl("uzrasai");
   if (!raktai.length){
     list.innerHTML = '<p class="quote">Kol kas tuščia. Kiekvieną vakarą — viena eilutė skiltyje „Šiandien“.</p>';
     return;
   }
   var h = "";
   for (var i = 0; i < raktai.length; i++){
-    var d = raktai[i], e = state.days[d];
+    var d = raktai[i], e = state.days[d] || {};
     var nuot = ["","lengva","vidutiniškai","sunku"][e.mood] || "";
+    var fotos = pagalDiena[d] || [];
+    fotos.sort(function(a,b){ return a.t - b.t; });
     h += '<div class="entry"><div class="when">' + dienosNr(d) + ' diena · ' + ltData(d) + (nuot ? ' · ' + nuot : '') + '</div>' +
-         '<div class="what">' + saugus(e.note) + '</div></div>';
+         (String(e.note||"").trim() ? '<div class="what">' + saugus(e.note) + '</div>' : '') +
+         (fotos.length ? '<div class="photos small" style="margin-top:10px">' + fotoHtml(fotos, "uzrasai") + '</div>' : '') +
+         '</div>';
   }
   list.innerHTML = h;
 }
@@ -889,6 +1081,15 @@ function veiksmas(act, b){
     pasirinkta = b.getAttribute("data-d"); piesti(); rodyti("siandien"); return;
   }
   if (act === "siandien"){ pasirinkta = TODAY; piesti(); return; }
+  if (act === "foto"){ rodytiNuotrauka(b.getAttribute("data-id")); return; }
+  if (act === "fotoUzdaryti"){ uzdarytiNuotrauka(); return; }
+  if (act === "fotoTrinti"){
+    if (!window.confirm("Ištrinti šią nuotrauką?")) return;
+    var fid = b.getAttribute("data-id");
+    uzdarytiNuotrauka();
+    fotoTrinti(fid).then(function(){ piestiNuotraukas(); if (rodomas === "uzrasai") piestiUzrasus(); });
+    return;
+  }
   if (act === "rodyti"){ rodyti(b.getAttribute("data-view")); return; }
   if (act === "meniu"){ state.menuOffset += +b.getAttribute("data-delta"); saugoti(); piestiValgius(); return; }
   if (act === "tikslas"){ state.walkGoal = +b.getAttribute("data-min"); saugoti(); piesti(); return; }
