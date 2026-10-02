@@ -265,10 +265,10 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
         <div>
           <div style="margin-bottom:10px">ėjimo tikslas</div>
           <div class="row" id="goalRow" style="margin-top:0">
+            <button class="btn small" data-act="tikslas" data-min="25">25 min</button>
             <button class="btn small" data-act="tikslas" data-min="30">30 min</button>
             <button class="btn small" data-act="tikslas" data-min="45">45 min</button>
             <button class="btn small" data-act="tikslas" data-min="60">60 min</button>
-            <button class="btn small" data-act="tikslas" data-min="75">75 min</button>
           </div>
         </div>
         <label>pradžios diena <input type="date" id="startDate"></label>
@@ -280,7 +280,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
         </div>
         <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
-        <p class="tiny" id="versija" style="margin:0">versija 13 · su nuotraukomis</p>
+        <p class="tiny" id="versija" style="margin:0">versija 14 · tikslas 25 min</p>
       </div>
     </section>
 
@@ -386,7 +386,7 @@ window.addEventListener("unhandledrejection", function(ev){
   var r = ev && ev.reason;
   diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
 });
-diag("paleista v13");
+diag("paleista v14");
 
 /* ============ duomenys ============ */
 var KEY = "devynios90.v1";
