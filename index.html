@@ -175,7 +175,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
       <p class="quote" id="preNote" hidden>Rytoj — pirma diena. Šiandien nieko žymėti nereikia.</p>
 
       <div id="daily">
-        <p class="cap">šios dienos ritualai</p>
+        <p class="cap">šios dienos ritualai · mažiau kalorijų</p>
         <div class="rituals" id="rituals"></div>
 
         <div class="block">
@@ -245,10 +245,10 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
         <div>
           <div style="margin-bottom:10px">ėjimo tikslas</div>
           <div class="row" id="goalRow" style="margin-top:0">
-            <button class="btn small" data-act="tikslas" data-min="20">20 min</button>
             <button class="btn small" data-act="tikslas" data-min="30">30 min</button>
             <button class="btn small" data-act="tikslas" data-min="45">45 min</button>
             <button class="btn small" data-act="tikslas" data-min="60">60 min</button>
+            <button class="btn small" data-act="tikslas" data-min="75">75 min</button>
           </div>
         </div>
         <label>pradžios diena <input type="date" id="startDate"></label>
@@ -260,7 +260,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
         </div>
         <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
-        <p class="tiny" id="versija" style="margin:0">versija 9 · veikia be interneto</p>
+        <p class="tiny" id="versija" style="margin:0">versija 10 · kalorijų planas</p>
       </div>
     </section>
 
@@ -287,6 +287,15 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
       <div class="rule"><span>ne</span><span>cukrus, medus, agavų ir klevų sirupas, datulių sirupas, saldikliai</span></div>
       <div class="rule"><span>ne</span><span>balti kvietiniai miltai: bandelės, batonas, makaronai, sausainiai, pica</span></div>
       <div class="rule"><span>ne</span><span>saldinti gėrimai, sultys, jogurtai su vaisių priedu, granola su sirupu</span></div>
+
+      <p class="cap" style="margin-top:30px">kur slepiasi kalorijos</p>
+      <div class="rule"><span>—</span><span>granola: dubenėlis su pienu — kaip pietūs; keisk į avižinę košę ant vandens arba varškę su uogomis</span></div>
+      <div class="rule"><span>—</span><span>riešutai ir sūris iš pakuotės: trys saujos nepastebimai — 450 kcal; tik kaip patiekalo dalis</span></div>
+      <div class="rule"><span>—</span><span>duona: kiekviena riekė ~100 kcal, bandelė — 350; dvi riekės per dieną ir gana</span></div>
+      <div class="rule"><span>—</span><span>kava su pienu ir sultys: 200–300 kcal per dieną, kurių „nevalgei"</span></div>
+      <div class="rule"><span>—</span><span>vakaras po 20 val.: čia suvalgoma tai, ko kūnui nereikia — tik vanduo ar arbata</span></div>
+      <div class="rule"><span>+</span><span>baltymas pirmas lėkštėje — sotina ilgiausiai ir saugo raumenis, kol svoris krenta</span></div>
+      <div class="rule"><span>+</span><span>pusė lėkštės — daržovės, ketvirtis — baltymas, ketvirtis — grikiai ar bulvės</span></div>
 
       <p class="cap" style="margin-top:30px">kai traukia saldumo</p>
       <div class="rule"><span>1</span><span>stiklinė vandens ir dešimt minučių lauke — potraukis trunka trumpiau nei tavo ėjimas</span></div>
@@ -358,12 +367,12 @@ window.addEventListener("unhandledrejection", function(ev){
   var r = ev && ev.reason;
   diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
 });
-diag("paleista v9");
+diag("paleista v10");
 
 /* ============ duomenys ============ */
 var KEY = "devynios90.v1";
 var PRADZIA = "2026-09-03";
-var STIKLINES = 8, DALYS = 5;
+var STIKLINES = 8, DALYS = 8;   /* perskaičiuojama žemiau, kai žinomi ritualai */
 
 var MEN = ["sausio","vasario","kovo","balandžio","gegužės","birželio","liepos",
            "rugpjūčio","rugsėjo","spalio","lapkričio","gruodžio"];
@@ -418,26 +427,31 @@ var EILUTES = [
   "Paskutinė diena bus tokia pat paprasta kaip ši."
 ];
 var MENIU = [
-  {p:"Grikių košė su graikiniais riešutais ir mėlynėmis", pi:"Lęšių sriuba su morkomis ir čiobreliais, ruginės duonos riekė", v:"Keptas moliūgas su avinžirniais ir tahini padažu", u:"Sauja migdolų"},
+  {p:"Grikių košė su graikiniais riešutais ir mėlynėmis", pi:"Lęšių sriuba su morkomis ir čiobreliais, ruginės duonos riekė", v:"Keptas moliūgas su avinžirniais ir tahini padažu", u:"Virtas kiaušinis"},
   {p:"Avižinė košė ant augalinio pieno su cinamonu ir tarkuotu obuoliu", pi:"Burokėlių sriuba su grietine ir virtu kiaušiniu", v:"Grikiai su keptais grybais ir svogūnais", u:"Morkų lazdelės su humusu"},
   {p:"Omletas su špinatais ir feta", pi:"Avinžirnių kotletai, raugintų kopūstų salotos", v:"Daržovių troškinys su baltosiomis pupelėmis", u:"Kriaušė"},
-  {p:"Varškė su sėmenimis ir avietėmis", pi:"Bolivinės balandos salotos su agurku, mėtomis ir alyvuogių aliejumi", v:"Cukinijų blynai iš grikių miltų, jogurto ir krapų padažas", u:"Sauja graikinių riešutų"},
-  {p:"Ruginės duonos skrebutis su avokadu ir virtu kiaušiniu", pi:"Kreminė moliūgų sriuba su moliūgų sėklomis", v:"Lęšių troškinys su pomidorais ir čiobreliais", u:"Obuolys su nesaldintu riešutų sviestu"},
-  {p:"Sorų košė su karšta kriauše ir cinamonu", pi:"Kopūstų ir bulvių troškinys su kmynais", v:"Salotos su keptu sūriu ir burokėliais", u:"Saulėgrąžų sauja"},
+  {p:"Varškė su sėmenimis ir avietėmis", pi:"Bolivinės balandos salotos su agurku, mėtomis ir alyvuogių aliejumi", v:"Cukinijų blynai iš grikių miltų, jogurto ir krapų padažas", u:"Agurkas su varške"},
+  {p:"Ruginės duonos skrebutis su avokadu ir virtu kiaušiniu", pi:"Kreminė moliūgų sriuba su moliūgų sėklomis", v:"Lęšių troškinys su pomidorais ir čiobreliais", u:"Obuolys"},
+  {p:"Sorų košė su karšta kriauše ir cinamonu", pi:"Kopūstų ir bulvių troškinys su kmynais", v:"Salotos su keptu sūriu ir burokėliais", u:"Morkų lazdelės"},
   {p:"Nesaldintas jogurtas su spanguolėmis ir sėklomis", pi:"Grybų sriuba su miežinėmis kruopomis", v:"Pomidorai, įdaryti grikiais ir sūriu", u:"Virtas kiaušinis"},
   {p:"Grikinių miltų blynai su varške", pi:"Raudonųjų pupelių troškinys su paprika", v:"Keptos daržovės su tahini padažu", u:"Slyvos"},
-  {p:"Nakties avižos su chia sėklomis ir uogomis", pi:"Šaltibarščiai su karštomis virtomis bulvėmis", v:"Špinatų ir avinžirnių karis su rudaisiais ryžiais", u:"Riešutų mišinys"},
+  {p:"Nakties avižos su chia sėklomis ir uogomis", pi:"Šaltibarščiai su karštomis virtomis bulvėmis", v:"Špinatų ir avinžirnių karis su rudaisiais ryžiais", u:"Stiklinė kefyro"},
   {p:"Kiaušinienė su pomidorais ir baziliku", pi:"Daržovių sriuba su lęšiais", v:"Keptas batatas su varške ir krapais", u:"Sauja vynuogių"},
-  {p:"Varškės apkepas su avižinėmis sėlenomis (be cukraus)", pi:"Grikių salotos su rūkytu sūriu ir agurkais", v:"Raugintų kopūstų sriuba su bulvėmis", u:"Migdolai ir džiovintos spanguolės be cukraus"},
+  {p:"Varškės apkepas su avižinėmis sėlenomis (be cukraus)", pi:"Grikių salotos su rūkytu sūriu ir agurkais", v:"Raugintų kopūstų sriuba su bulvėmis", u:"Obuolys"},
   {p:"Sorų košė su moliūgų sėklomis", pi:"Avinžirnių ir moliūgų karis", v:"Ruginė duona su varške, ridikėliais ir svogūnų laiškais", u:"Stiklinė kefyro"},
-  {p:"Omletas su grybais ir petražolėmis", pi:"Žirnių sriuba su čiobreliais ir morkomis", v:"Keptos cukinijos su lęšiais ir fetos gabalėliais", u:"Obuolys ir riešutai"},
-  {p:"Grikių košė su kefyru", pi:"Daržovių plovas su rudaisiais ryžiais", v:"Salotos su virtais kiaušiniais, burokėliais ir garstyčių padažu", u:"Sauja lazdyno riešutų"}
+  {p:"Omletas su grybais ir petražolėmis", pi:"Žirnių sriuba su čiobreliais ir morkomis", v:"Keptos cukinijos su lęšiais ir fetos gabalėliais", u:"Kriaušė"},
+  {p:"Grikių košė su kefyru", pi:"Daržovių plovas su rudaisiais ryžiais", v:"Salotos su virtais kiaušiniais, burokėliais ir garstyčių padažu", u:"Pomidoras su žiupsneliu druskos"}
 ];
 var RITUALAI = [
-  {k:"sugar", t:"be pridėtinio cukraus", e:"vaisiai — taip; cukrus, medus, sirupai, saldikliai — ne"},
-  {k:"flour", t:"be baltų kvietinių miltų", e:"ruginė raugo duona, grikiai, avižos, soros — taip"},
-  {k:"veg",   t:"diena be mėsos", e:"ankštiniai, kiaušiniai, pieno produktai, žuvis — jei ją valgai"}
+  {k:"sugar",   t:"be pridėtinio cukraus",        e:"įskaitant gėrimus: kava be cukraus, be sulčių; vaisiai — taip"},
+  {k:"bread",   t:"duona — iki 2 riekių",          e:"be bandelių, be granolos; juoda ar balta — nesvarbu, svarbu kiek"},
+  {k:"protein", t:"baltymas kiekviename valgyme",  e:"kiaušiniai, varškė, lęšiai, pupelės, žuvis — pirmiausia į lėkštę"},
+  {k:"snacks",  t:"užkandžiai tik lengvi",         e:"kiaušinis, daržovė, vaisius; riešutai ir sūris — tik patiekale, ne iš pakuotės"},
+  {k:"evening", t:"po 20 val. nevalgau",           e:"tik vanduo ar arbata; valgymo langas — 12 valandų"},
+  {k:"veg",     t:"diena be mėsos",                e:"ankštiniai, kiaušiniai, pieno produktai, žuvis — jei ją valgai"}
 ];
+var RAKTAI = RITUALAI.map(function(r){ return r.k; });
+DALYS = RITUALAI.length + 2;   /* ritualai + vanduo + ėjimas */
 var BURNOS = [
   "M83 145 C92 138 109 138 117 145",
   "M83 144 C92 139 109 139 117 144",
@@ -475,8 +489,10 @@ function irasyti(){
   catch(e){ atmintisVeikia = false; }
 }
 function tuscia(e){
-  return !e || (!e.sugar && !e.flour && !e.veg && !(e.walk>0) && !(e.water>0) &&
-                !String(e.note||"").trim() && !e.mood && typeof e.weight !== "number");
+  if (!e) return true;
+  for (var i = 0; i < RAKTAI.length; i++){ if (e[RAKTAI[i]]) return false; }
+  if (e.flour) return false;
+  return !(e.walk>0) && !(e.water>0) && !String(e.note||"").trim() && !e.mood && typeof e.weight !== "number";
 }
 
 var state = skaityti() || {};
@@ -488,6 +504,17 @@ if (!state.pradziaSutvarkyta){
   if (state.start > PRADZIA) state.start = PRADZIA;
   state.pradziaSutvarkyta = true;
 }
+/* kalorijų planas (spalio 2 d.): sena „be baltų miltų" žyma tampa „duona iki 2 riekių",
+   ėjimo tikslas pakeliamas iki 45 min, jei dar buvo numatytasis */
+if (!state.kalorijuPlanas){
+  for (var kk in state.days){
+    if (!state.days.hasOwnProperty(kk)) continue;
+    var dd = state.days[kk];
+    if (dd && dd.flour && typeof dd.bread === "undefined") dd.bread = true;
+  }
+  if (state.walkGoal === 30) state.walkGoal = 45;
+  state.kalorijuPlanas = true;
+}
 irasyti();
 
 diag("būsena ✓");
@@ -495,7 +522,7 @@ var pasirinkta = TODAY;
 
 function diena(d){
   var e = state.days[d];
-  if (!e){ e = state.days[d] = { sugar:false, flour:false, veg:false, walk:0, water:0, mood:0, note:"", weight:null }; }
+  if (!e){ e = state.days[d] = { walk:0, water:0, mood:0, note:"", weight:null }; }
   if (typeof e.water !== "number") e.water = 0;
   if (typeof e.walk !== "number") e.walk = 0;
   if (typeof e.weight === "undefined") e.weight = null;
@@ -509,7 +536,17 @@ function dienosNr(d){ return diffDays(state.start, d) + 1; }
 function savaitesNr(n){ return Math.min(12, Math.max(0, Math.ceil(n/7)-1)); }
 function lygis(d){
   var e = state.days[d]; if (!e) return 0;
-  return (e.sugar?1:0)+(e.flour?1:0)+(e.veg?1:0)+((e.walk||0)>=state.walkGoal?1:0)+((e.water||0)>=STIKLINES?1:0);
+  var n = 0;
+  for (var i = 0; i < RAKTAI.length; i++){ if (e[RAKTAI[i]]) n++; }
+  if ((e.walk||0) >= state.walkGoal) n++;
+  if ((e.water||0) >= STIKLINES) n++;
+  return n;
+}
+function pakopa(d){
+  var n = lygis(d);
+  if (n <= 0) return 0;
+  if (n >= DALYS) return 5;
+  return Math.max(1, Math.min(4, Math.round(n / DALYS * 5)));
 }
 function kg(v){ return (Math.round(v*10)/10).toFixed(1).replace(".", ","); }
 function saugus(s){ return String(s).replace(/[<>&]/g, function(c){ return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c]; }); }
@@ -569,7 +606,7 @@ function pasveikinimas(){
 }
 
 function piestiSiandien(){
-  var n = dienosNr(pasirinkta), e = diena(pasirinkta), lv = lygis(pasirinkta);
+  var n = dienosNr(pasirinkta), e = diena(pasirinkta), lv = pakopa(pasirinkta);
 
   tekstas("stamp", antspaudas(pasirinkta));
   var m = el("mouth"); if (m) m.setAttribute("d", BURNOS[lv] || BURNOS[0]);
@@ -682,8 +719,8 @@ function piestiKelia(){
   if (grid){
     var nToday = dienosNr(TODAY), h = "";
     for (var i = 1; i <= 90; i++){
-      var d = addDays(state.start, i-1), lv = lygis(d), ateitis = (i > nToday);
-      h += '<button class="cell" data-act="diena" data-d="' + d + '" data-level="' + lv + '"' +
+      var d = addDays(state.start, i-1), lv = lygis(d), pk = pakopa(d), ateitis = (i > nToday);
+      h += '<button class="cell" data-act="diena" data-d="' + d + '" data-level="' + pk + '"' +
            (d === TODAY ? ' data-today="1"' : '') + (ateitis ? ' disabled' : '') +
            ' title="' + i + ' diena · ' + ltData(d) + ' · ' + lv + '/' + DALYS + '"' +
            ' aria-label="' + i + ' diena, ' + lv + ' iš ' + DALYS + '"></button>';
@@ -870,7 +907,7 @@ function veiksmas(act, b){
   }
   if (act === "isNaujo"){
     if (!window.confirm("Ištrinti visas žymas ir pradėti nuo šiandien?")) return;
-    state = { start: TODAY, days:{}, menuOffset:0, walkGoal:30, pradziaSutvarkyta:true };
+    state = { start: TODAY, days:{}, menuOffset:0, walkGoal:45, pradziaSutvarkyta:true, kalorijuPlanas:true };
     pasirinkta = TODAY; saugoti(); piesti();
     return;
   }
