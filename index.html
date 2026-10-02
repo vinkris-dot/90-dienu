@@ -260,12 +260,12 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
           <div class="row"><button class="btn small" data-act="atkurti">atkurti iš laukelio</button></div>
         </div>
         <button class="link" data-act="isNaujo">pradėti kelią iš naujo</button>
-        <p class="tiny" id="versija" style="margin:0">versija 11 · kalorijų planas</p>
+        <p class="tiny" id="versija" style="margin:0">versija 12 · lėkštė 350 g</p>
       </div>
     </section>
 
     <section id="v-valgiai" hidden>
-      <p class="stamp">stalas be mėsos</p>
+      <p class="stamp">stalas be mėsos · lėkštė iki 350 g</p>
       <div class="head2"><b>Šios dienos valgiai</b><span id="menuNo"></span></div>
       <dl id="menuList" style="margin-top:14px"></dl>
       <div class="row">
@@ -280,10 +280,9 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
       <div class="rule"><span>taip</span><span>lęšiai, avinžirniai, pupelės, žirniai — baltymų pamatas be mėsos</span></div>
       <div class="rule"><span>taip</span><span>kiaušiniai, varškė, sūris, jogurtas, kefyras — be pridėto cukraus</span></div>
       <div class="rule"><span>taip</span><span>švieži vaisiai ir uogos; riešutai, sėklos — sauja, ne dubuo</span></div>
-      <div class="rule"><span>taip</span><span>žuvis, jei ją valgai — meniu sudarytas be mėsos ir be žuvies, tinka abiem</span></div>
+      <div class="rule"><span>taip</span><span>lėkštė iki 350 g — kelis kartus pasverk virtuvinėmis svarstyklėmis, po savaitės akis žinos pati</span></div>
 
       <p class="cap" style="margin-top:30px">ko vengti</p>
-      <div class="rule"><span>ne</span><span>mėsa ir jos gaminiai: dešra, kumpis, faršas, sultinio kubeliai su mėsa</span></div>
       <div class="rule"><span>ne</span><span>cukrus, medus, agavų ir klevų sirupas, datulių sirupas, saldikliai</span></div>
       <div class="rule"><span>ne</span><span>balti kvietiniai miltai: bandelės, batonas, makaronai, sausainiai, pica</span></div>
       <div class="rule"><span>ne</span><span>saldinti gėrimai, sultys, jogurtai su vaisių priedu, granola su sirupu</span></div>
@@ -295,7 +294,7 @@ footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--hair);
       <div class="rule"><span>—</span><span>kava su pienu ir sultys: 200–300 kcal per dieną, kurių „nevalgei"</span></div>
       <div class="rule"><span>—</span><span>vakaras po 20 val.: čia suvalgoma tai, ko kūnui nereikia — tik vanduo ar arbata</span></div>
       <div class="rule"><span>+</span><span>baltymas pirmas lėkštėje — sotina ilgiausiai ir saugo raumenis, kol svoris krenta</span></div>
-      <div class="rule"><span>+</span><span>pusė lėkštės — daržovės, ketvirtis — baltymas, ketvirtis — grikiai ar bulvės</span></div>
+      <div class="rule"><span>+</span><span>350 g lėkštė: pusė — daržovės, ketvirtis — baltymas, ketvirtis — grikiai ar bulvės; antros porcijos nėra</span></div>
 
       <p class="cap" style="margin-top:30px">kai traukia saldumo</p>
       <div class="rule"><span>1</span><span>stiklinė vandens ir dešimt minučių lauke — potraukis trunka trumpiau nei tavo ėjimas</span></div>
@@ -367,7 +366,7 @@ window.addEventListener("unhandledrejection", function(ev){
   var r = ev && ev.reason;
   diag("PAŽADO KLAIDA: " + ((r && (r.message || r.code)) || String(r)));
 });
-diag("paleista v11");
+diag("paleista v12");
 
 /* ============ duomenys ============ */
 var KEY = "devynios90.v1";
@@ -448,7 +447,7 @@ var RITUALAI = [
   {k:"protein", t:"baltymas kiekviename valgyme",  e:"kiaušiniai, varškė, lęšiai, pupelės, žuvis — pirmiausia į lėkštę"},
   {k:"snacks",  t:"užkandžiai tik lengvi",         e:"kiaušinis, daržovė, vaisius; riešutai ir sūris — tik patiekale, ne iš pakuotės"},
   {k:"evening", t:"po 20 val. nevalgau",           e:"tik vanduo ar arbata; valgymo langas — 12 valandų"},
-  {k:"veg",     t:"diena be mėsos",                e:"ankštiniai, kiaušiniai, pieno produktai, žuvis — jei ją valgai"}
+  {k:"plate",   t:"lėkštė — iki 350 g",            e:"kiekvienas valgymas; pusė — daržovės, ketvirtis — baltymas, ketvirtis — grikiai ar bulvės"}
 ];
 var RAKTAI = RITUALAI.map(function(r){ return r.k; });
 DALYS = RITUALAI.length + 2;   /* ritualai + vanduo + ėjimas */
